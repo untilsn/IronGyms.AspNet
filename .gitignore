@@ -1,0 +1,45 @@
+### ===== .NET / ASP.NET Core (server/) ===== ###
+bin/
+obj/
+out/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# appsettings chứa secret thật (connection string, JWT key)
+appsettings.Development.json
+appsettings.Local.json
+appsettings.Production.json
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.rsuser
+
+# EF Core (KHÔNG ignore Migrations/, phải commit)
+# Migrations/   <- không được liệt kê ở đây
+
+### ===== Node / React (client/) ===== ###
+node_modules/
+dist/
+build/
+.vite/
+
+# Env chứa secret
+.env
+.env.local
+.env.*.local
+
+# Log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+### ===== OS / Editor chung ===== ###
+.DS_Store
+Thumbs.db
+*.log
+.vscode/*
+!.vscode/extensions.json
