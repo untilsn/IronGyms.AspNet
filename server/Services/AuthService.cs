@@ -2,10 +2,10 @@ using IronGyms.Api.Data;
 using IronGyms.Api.DTOs.Auth;
 using IronGyms.Api.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace IronGyms.Api.Services;
@@ -23,7 +23,6 @@ public class AuthService : IAuthService
 
     public async Task<AuthResponseDto?> RegisterAsync(RegisterDto dto)
     {
-        // check email đã tồn tại chưa — giống findOne({ email }) bên Mongoose
         var exists = await _context.Users.AnyAsync(u => u.Email == dto.Email);
         if (exists) return null;
 
@@ -36,6 +35,11 @@ public class AuthService : IAuthService
         };
 
         _context.Users.Add(user);
+
+        var member = new Member { UserId = user.Id, User = user };
+        _context.Members.Add(member);
+
+        await SetRefreshTokenAsync(user);
         await _context.SaveChangesAsync();
 
         return BuildAuthResponse(user);
@@ -47,24 +51,62 @@ public class AuthService : IAuthService
         if (user is null) return null;
 
         var isPasswordValid = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash);
-        if (!isPasswordValid) return null;
+        if (!isPasswordValid || !user.IsActive) return null;
 
-        if (!user.IsActive) return null;
+        await SetRefreshTokenAsync(user);
+        await _context.SaveChangesAsync();
 
         return BuildAuthResponse(user);
     }
 
+    public async Task<AuthResponseDto?> RefreshTokenAsync(string refreshToken)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
+
+        if (user is null) return null;
+        if (user.RefreshTokenExpiresAt is null || user.RefreshTokenExpiresAt < DateTime.UtcNow)
+            return null; // refresh token hết hạn hoặc không hợp lệ
+
+        await SetRefreshTokenAsync(user); // cấp refresh token mới (rotation)
+        await _context.SaveChangesAsync();
+
+        return BuildAuthResponse(user);
+    }
+
+    public async Task<bool> LogoutAsync(Guid userId)
+    {
+        var user = await _context.Users.FindAsync(userId);
+        if (user is null) return false;
+
+        user.RefreshToken = null;
+        user.RefreshTokenExpiresAt = null;
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
+    private async Task SetRefreshTokenAsync(User user)
+    {
+        user.RefreshToken = GenerateRefreshToken();
+        user.RefreshTokenExpiresAt = DateTime.UtcNow.AddDays(7); // refresh token sống 7 ngày
+        await Task.CompletedTask;
+    }
+
+    private static string GenerateRefreshToken()
+    {
+        var randomBytes = RandomNumberGenerator.GetBytes(64);
+        return Convert.ToBase64String(randomBytes);
+    }
+
     private AuthResponseDto BuildAuthResponse(User user)
     {
-        var token = GenerateJwtToken(user);
-
         return new AuthResponseDto
         {
             Id = user.Id,
             Fullname = user.Fullname,
             Email = user.Email,
             Role = user.Role.ToString(),
-            Token = token
+            Token = GenerateJwtToken(user),
+            RefreshToken = user.RefreshToken!
         };
     }
 
@@ -79,7 +121,6 @@ public class AuthService : IAuthService
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
         var expiresInMinutes = double.Parse(_config["Jwt:ExpiresInMinutes"]!);
 
         var token = new JwtSecurityToken(

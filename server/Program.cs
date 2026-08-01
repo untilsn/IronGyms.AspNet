@@ -49,6 +49,13 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Seed dữ liệu ban đầu (chạy 1 lần mỗi khi start app, tự bỏ qua nếu đã có Admin)
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await DbSeeder.SeedAsync(context);
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();       // ⚠️ và 2 dòng này

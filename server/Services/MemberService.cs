@@ -15,12 +15,13 @@ public class MemberService : IMemberService
 
     public async Task<List<Member>> GetAllAsync()
     {
-        return await _context.Members.ToListAsync();
+        return await _context.Members.Include(m => m.User).ToListAsync();
     }
 
     public async Task<Member?> GetByIdAsync(Guid id)
     {
-        return await _context.Members.FindAsync(id);
+        return await _context.Members.Include(m => m.User)
+            .FirstOrDefaultAsync(m => m.Id == id);
     }
 
     public async Task<Member> CreateAsync(Member member)
@@ -35,8 +36,8 @@ public class MemberService : IMemberService
         var member = await _context.Members.FindAsync(id);
         if (member is null) return null;
 
-        member.Fullname = updated.Fullname;
-        member.Email = updated.Email;
+        member.DateOfBirth = updated.DateOfBirth;
+        member.Address = updated.Address;
         await _context.SaveChangesAsync();
         return member;
     }

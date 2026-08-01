@@ -1,11 +1,6 @@
 namespace IronGyms.Api.Models;
 
-
-public enum UserRole
-{
-    Admin, Staff, Trainer, Member
-}
-
+public enum UserRole { Admin, Staff, Trainer, Member }
 
 public class User
 {
@@ -16,4 +11,8 @@ public class User
     public UserRole Role { get; set; } = UserRole.Member;
     public bool IsActive { get; set; } = true;
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+    // Refresh token fields
+    public string? RefreshToken { get; set; }
+    public DateTime? RefreshTokenExpiresAt { get; set; }
 }

@@ -1,12 +1,13 @@
-using IronGyms.Api.DTOs;
 using IronGyms.Api.Models;
 using IronGyms.Api.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IronGyms.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]   // toàn bộ controller yêu cầu phải login (có token hợp lệ)
 public class MembersController : ControllerBase
 {
     private readonly IMemberService _memberService;
@@ -16,6 +17,7 @@ public class MembersController : ControllerBase
         _memberService = memberService;
     }
 
+    [Authorize(Roles = "Admin,Staff")]
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
@@ -23,6 +25,7 @@ public class MembersController : ControllerBase
         return Ok(members);
     }
 
+    [Authorize(Roles = "Admin,Staff")]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -31,14 +34,15 @@ public class MembersController : ControllerBase
         return Ok(member);
     }
 
+    [Authorize(Roles = "Admin,Staff")]
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody] CreateMemberDto dto)
+    public async Task<IActionResult> Create([FromBody] Member member)
     {
-        var member = new Member {Fullname = dto.Fullname, Email = dto.Email};
         var created = await _memberService.CreateAsync(member);
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
+    [Authorize(Roles = "Admin,Staff")]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] Member updated)
     {
@@ -47,6 +51,7 @@ public class MembersController : ControllerBase
         return Ok(member);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
