@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: irongyms --default;
+}
+
+@plugin "daisyui/theme" {
+  name: "irongyms";
+  default: true;
+  color-scheme: dark;
+
+  --color-base-100: oklch(19% 0.012 260);
+  --color-base-200: oklch(23% 0.014 260);
+  --color-base-300: oklch(28% 0.016 260);
+  --color-base-content: oklch(93% 0.01 260);
+
+  --color-primary: oklch(66% 0.19 41);
+  --color-primary-content: oklch(15% 0.02 41);
+
+  --color-secondary: oklch(62% 0.14 250);
+  --color-secondary-content: oklch(97% 0.01 250);
+
+  --color-accent: oklch(78% 0.16 90);
+  --color-accent-content: oklch(15% 0.02 90);
+
+  --color-neutral: oklch(25% 0.014 260);
+  --color-neutral-content: oklch(90% 0.01 260);
+
+  --color-info: oklch(70% 0.12 220);
+  --color-success: oklch(72% 0.16 150);
+  --color-warning: oklch(80% 0.16 85);
+  --color-error: oklch(63% 0.21 25);
+
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.75rem;
+  --border: 1px;
+}
+
+@theme {
+  --font-display: "Oswald", sans-serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+}
