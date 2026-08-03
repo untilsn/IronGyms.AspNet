@@ -1,10 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 
-export default function RoleRoute({
-  allowedRoles = [],
-  redirectTo = "/admin/login",
-}) {
+export default function RoleRoute({ allowedRoles = [] }) {
   const { user, isAuthenticated, isChecking } = useAuthStore();
 
   if (isChecking) {
@@ -15,8 +12,13 @@ export default function RoleRoute({
     );
   }
 
-  if (!isAuthenticated) return <Navigate to={redirectTo} replace />;
-  if (!allowedRoles.includes(user?.role)) return <Navigate to="/" replace />;
+  if (!isAuthenticated) {
+    return <Navigate to="/admin/login" replace />;
+  }
+
+  if (!allowedRoles.includes(user?.role)) {
+    return <Navigate to="/" replace />;
+  }
 
   return <Outlet />;
 }

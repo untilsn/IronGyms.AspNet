@@ -1,8 +1,9 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 
-export default function ProtectedRoute({ redirectTo = "/login" }) {
+export default function ProtectedRoute() {
   const { isAuthenticated, isChecking } = useAuthStore();
+  const location = useLocation();
 
   if (isChecking) {
     return (
@@ -12,7 +13,9 @@ export default function ProtectedRoute({ redirectTo = "/login" }) {
     );
   }
 
-  if (!isAuthenticated) return <Navigate to={redirectTo} replace />;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
 
   return <Outlet />;
 }
