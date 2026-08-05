@@ -1,25 +1,31 @@
 import { Route } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicOnlyRoute from "./PublicOnlyRoute";
-import ClientLayout from "../components/layout/client/ClientLayout";
+import AuthLayout from "../components/layout/auth/AuthLayout";
 
+import HomePage from "../features/client/home/HomePage";
 import LoginPage from "../features/auth/LoginPage";
 import RegisterPage from "../features/auth/RegisterPage";
-import HomePage from "../features/client/home/HomePage";
+import MainLayout from "../components/layout/client/MainLayout";
 // import MembershipPage, SchedulePage, CheckInPage, ProfilePage khi bạn dựng xong
 
 export const clientRoutes = (
   <>
-    {/* Public-only: đã đăng nhập thì không cho quay lại login/register */}
+    {/* Public - HomePage tự có Marketing Navbar/Footer riêng, không cần layout bọc */}
+    <Route path="/" element={<HomePage />} />
+
+    {/* Auth - layout riêng nền hero, đã login thì không cho vào lại */}
     <Route element={<PublicOnlyRoute area="client" />}>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
+      <Route element={<AuthLayout />}>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Route>
     </Route>
 
-    {/* Protected: bắt buộc đăng nhập */}
-    <Route element={<ProtectedRoute />}>
-      <Route element={<ClientLayout />}>
-        <Route path="/" element={<HomePage />} />
+    {/* Protected - khu vực dashboard, bắt buộc đăng nhập */}
+    <Route element={<ProtectedRoute allowedRoles={["member"]} />}>
+      <Route element={<MainLayout />}>
+        {/* <Route path="/dashboard" element={<DashboardHomePage />} /> */}
         {/* <Route path="/dashboard/membership" element={<MembershipPage />} /> */}
         {/* <Route path="/dashboard/schedule" element={<SchedulePage />} /> */}
         {/* <Route path="/dashboard/checkin" element={<CheckInPage />} /> */}

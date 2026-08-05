@@ -39,70 +39,74 @@ export default function LoginPage() {
   const onSubmit = (values) => loginMutation.mutate(values);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-base-100 px-4">
-      <div className="card w-full max-w-sm bg-base-200 shadow-xl">
-        <div className="card-body">
-          <h1 className="font-display text-2xl font-semibold text-base-content">
-            Iron<span className="text-primary">Gyms</span>
-          </h1>
-          <p className="mb-4 text-sm text-base-content/60">
-            Đăng nhập để tiếp tục
-          </p>
+    <div className="card w-full bg-base-100/90 shadow-2xl backdrop-blur-md">
+      <div className="card-body">
+        <h1 className="font-display text-3xl font-bold text-base-content">
+          Iron<span className="text-primary">Gyms</span>
+        </h1>
+        <p className="mb-4 text-sm text-base-content/60">
+          Đăng nhập để tiếp tục hành trình tập luyện của bạn
+        </p>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="email"
-                className="input input-bordered w-full"
-                {...register("email")}
-                autoFocus
-              />
-              {errors.email && (
-                <span className="mt-1 text-xs text-error">
-                  {errors.email.message}
-                </span>
-              )}
-            </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
+            <input
+              type="email"
+              placeholder="ban@email.com"
+              className={`input input-bordered w-full ${
+                errors.email ? "input-error" : ""
+              }`}
+              {...register("email")}
+              autoFocus
+            />
+            {errors.email && (
+              <p className="mt-1 text-xs text-error">{errors.email.message}</p>
+            )}
+          </div>
 
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Mật khẩu</span>
-              </label>
-              <input
-                type="password"
-                className="input input-bordered w-full"
-                {...register("password")}
-              />
-              {errors.password && (
-                <span className="mt-1 text-xs text-error">
-                  {errors.password.message}
-                </span>
-              )}
-            </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Mật khẩu</span>
+            </label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              className={`input input-bordered w-full ${
+                errors.password ? "input-error" : ""
+              }`}
+              {...register("password")}
+            />
+            {errors.password && (
+              <p className="mt-1 text-xs text-error">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
 
-            <button
-              type="submit"
-              className="btn btn-primary w-full"
-              disabled={loginMutation.isPending}
-            >
-              {loginMutation.isPending ? (
-                <span className="loading loading-spinner loading-sm" />
-              ) : (
-                "Đăng nhập"
-              )}
-            </button>
-          </form>
+          <button
+            type="submit"
+            className="btn btn-primary w-full"
+            disabled={loginMutation.isPending}
+          >
+            {loginMutation.isPending ? (
+              <span className="loading loading-spinner loading-sm" />
+            ) : (
+              "Đăng nhập"
+            )}
+          </button>
+        </form>
 
-          <p className="mt-4 text-center text-sm text-base-content/60">
-            Chưa có tài khoản?{" "}
-            <Link to="/register" className="link link-primary">
-              Đăng ký ngay
-            </Link>
-          </p>
-        </div>
+        <div className="divider text-xs text-base-content/40">hoặc</div>
+
+        <p className="text-center text-sm text-base-content/60">
+          Chưa có tài khoản?{" "}
+          <Link to="/register" className="link link-primary font-medium">
+            Đăng ký ngay
+          </Link>
+        </p>
       </div>
     </div>
   );
