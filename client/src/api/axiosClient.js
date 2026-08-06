@@ -17,16 +17,16 @@ const axiosClient = axios.create({
 
 // Response interceptor: redirect to /login on 401 (mirrors the MVC
 // OnChallenge behavior that used to redirect to /Auth/Login).
-axiosClient.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      if (window.location.pathname !== "/login") {
-        window.location.href = "/login";
-      }
-    }
-    return Promise.reject(error);
-  },
-);
+// axiosClient.interceptors.response.use(
+//   (response) => response,
+//   (error) => {
+//     if (error.response?.status === 401) {
+//       if (window.location.pathname !== "/login") {
+//         window.location.href = "/login";
+//       }
+//     }
+//     return Promise.reject(error);
+//   },
+// );
 
 export default axiosClient;

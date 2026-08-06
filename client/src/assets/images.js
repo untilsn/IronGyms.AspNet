@@ -5,6 +5,7 @@ import program3 from "./images/program3.jpg";
 import trainer1 from "./images/trainer1.jpg";
 import trainer2 from "./images/trainer2.jpg";
 import trainer3 from "./images/trainer3.jpg";
+import parallax from "./images/parallax.jpg";
 
 export const Images = {
   hero,
@@ -14,4 +15,5 @@ export const Images = {
   trainer1,
   trainer2,
   trainer3,
+  parallax,
 };
