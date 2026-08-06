@@ -4,12 +4,18 @@ import { testimonials } from "../data";
 
 export default function TestimonialsSection() {
   const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState("right");
   const current = testimonials[index];
 
-  const prev = () =>
+  const prev = () => {
+    setDirection("left");
     setIndex((i) => (i === 0 ? testimonials.length - 1 : i - 1));
-  const next = () =>
+  };
+
+  const next = () => {
+    setDirection("right");
     setIndex((i) => (i === testimonials.length - 1 ? 0 : i + 1));
+  };
 
   return (
     <section className="relative overflow-hidden bg-base-200 py-32">
@@ -25,7 +31,8 @@ export default function TestimonialsSection() {
               Cộng đồng <br />
               <span className="text-primary">vượt qua giới hạn.</span>
             </h2>
-            <div className="mb-12 flex gap-4">
+
+            <div className="mb-8 flex gap-4">
               <button
                 onClick={prev}
                 className="btn btn-circle btn-outline btn-sm"
@@ -41,21 +48,52 @@ export default function TestimonialsSection() {
                 <ArrowRight size={18} />
               </button>
             </div>
+
+            {/* dot indicator */}
+            <div className="flex gap-2">
+              {testimonials.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => {
+                    setDirection(i > index ? "right" : "left");
+                    setIndex(i);
+                  }}
+                  aria-label={`Xem testimonial ${i + 1}`}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    i === index ? "w-8 bg-primary" : "w-1.5 bg-base-content/20"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
 
-          <div className="rounded-xl border-l-4 border-primary bg-base-300 p-8">
-            <p className="mb-6 text-xl italic text-base-content">
-              "{current.quote}"
-            </p>
-            <div className="flex items-center gap-4">
-              <div className="h-12 w-12 rounded-full bg-primary/30" />
-              <div>
-                <p className="font-bold uppercase tracking-tight">
-                  {current.name}
-                </p>
-                <p className="text-xs uppercase tracking-widest text-base-content/50">
-                  {current.role}
-                </p>
+          {/* overflow-hidden để "kẹp" animation trượt gọn trong khung card */}
+          <div className="overflow-hidden">
+            <div
+              key={index}
+              className={`rounded-xl border-l-4 border-primary bg-base-300 p-8 ${
+                direction === "right"
+                  ? "animate-slide-in-right"
+                  : "animate-slide-in-left"
+              }`}
+            >
+              <p className="mb-6 text-xl italic text-base-content">
+                "{current.quote}"
+              </p>
+              <div className="flex items-center gap-4">
+                <img
+                  src={current.image}
+                  alt={current.name}
+                  className="h-10 w-10 rounded-full object-cover"
+                />
+                <div>
+                  <p className="font-bold uppercase tracking-tight">
+                    {current.name}
+                  </p>
+                  <p className="text-xs uppercase tracking-widest text-base-content/50">
+                    {current.role}
+                  </p>
+                </div>
               </div>
             </div>
           </div>

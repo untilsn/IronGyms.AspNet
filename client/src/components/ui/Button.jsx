@@ -35,7 +35,7 @@ const Button = forwardRef(function Button(
   },
   ref,
 ) {
-  const classes = `btn !rounded-none font-display font-semibold uppercase tracking-wide ${
+  const classes = `btn !rounded-none font-display font-semibold uppercase tracking-wide transition-all duration-250 hover:scale-[1.03] active:scale-[0.97] ${
     VARIANT_CLASS[variant] ?? ""
   } ${SIZE_CLASS[size] ?? ""} ${fullWidth ? "w-full" : ""} ${className}`;
 
@@ -51,7 +51,6 @@ const Button = forwardRef(function Button(
     </>
   );
 
-  // Có prop "to" -> render thành Link (điều hướng route), không thì render <button> thường
   if (to) {
     return (
       <Link ref={ref} to={to} className={classes} {...props}>
