@@ -1,6 +1,6 @@
 import { CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { membershipFeatures } from "../data";
+import { membershipFeatures } from "../homeData";
 
 export default function MembershipSection() {
   return (

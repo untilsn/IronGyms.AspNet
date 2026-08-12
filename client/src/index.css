@@ -51,6 +51,19 @@
   --font-sans: "Inter", sans-serif;
 }
 
+@utility container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  max-width: 1280px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-inline: 2rem;
+  }
+}
+
 body {
   font-family: var(--font-sans);
   background-color: var(--color-base-100);
@@ -129,4 +142,8 @@ html {
 
 .heading-vn span {
   line-height: 1.15;
+}
+
+.editorial-clip {
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
 }

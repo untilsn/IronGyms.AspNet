@@ -1,5 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
-import { programs } from "../data";
+import { programs } from "../homeData";
 
 export default function ProgramsSection() {
   return (

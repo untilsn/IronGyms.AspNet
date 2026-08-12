@@ -13,6 +13,16 @@ import parallax from "./images/parallax.jpg";
 import reviewer1 from "./images/reviewer1.jpg";
 import reviewer2 from "./images/reviewer2.jpg";
 import reviewer3 from "./images/reviewer3.jpg";
+//about
+import aboutHero from "./images/about-hero.jpg";
+import aboutStory from "./images/about-us2.jpg";
+import aboutVision from "./images/about-vision.jpeg";
+//brand
+import brand1 from "./images/brand1.png";
+import brand2 from "./images/brand2.png";
+import brand3 from "./images/brand3.png";
+import brand4 from "./images/brand4.png";
+import brand5 from "./images/brand5.png";
 
 export const Images = {
   hero,
@@ -30,4 +40,14 @@ export const Images = {
   reviewer1,
   reviewer2,
   reviewer3,
+
+  //about
+  aboutHero,
+  aboutStory,
+  aboutVision,
+  brand1,
+  brand2,
+  brand3,
+  brand4,
+  brand5,
 };

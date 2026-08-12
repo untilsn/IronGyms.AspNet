@@ -41,9 +41,12 @@ export default function RegisterPage() {
   return (
     <div className="card w-full bg-base-100/90 shadow-2xl backdrop-blur-md">
       <div className="card-body">
-        <h1 className="font-display text-3xl font-bold text-base-content">
+        <Link
+          to="/"
+          className="font-display text-3xl font-bold text-base-content"
+        >
           Iron<span className="text-primary">Gyms</span>
-        </h1>
+        </Link>
         <p className="mb-4 text-sm text-base-content/60">
           Tạo tài khoản để bắt đầu tập luyện
         </p>

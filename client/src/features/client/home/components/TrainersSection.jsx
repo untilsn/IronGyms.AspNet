@@ -1,4 +1,4 @@
-import { trainers } from "../data";
+import { trainers } from "../homeData";
 
 export default function TrainersSection() {
   return (

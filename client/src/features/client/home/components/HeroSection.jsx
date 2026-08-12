@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
-    <section className="relative flex min-h-screen items-center pt-20">
+    <section className="relative flex min-h-screen items-center pb-20">
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-40 md:bg-fixed"
         style={{ backgroundImage: `url(${Images.hero})` }}
@@ -50,12 +50,6 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
-
-      <a href="#programs">
-        <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 animate-bounce text-base-content/40 hover:text-primary transition-colors">
-          <ChevronDown size={28} />
-        </div>
-      </a>
     </section>
   );
 }

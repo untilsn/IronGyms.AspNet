@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Quote } from "lucide-react";
-import { testimonials } from "../data";
+import { testimonials } from "../homeData";
 
 export default function TestimonialsSection() {
   const [index, setIndex] = useState(0);
@@ -35,14 +35,14 @@ export default function TestimonialsSection() {
             <div className="mb-8 flex gap-4">
               <button
                 onClick={prev}
-                className="btn btn-circle btn-outline btn-sm"
+                className="btn btn-circle btn-outline btn-sm border-neutral-content"
                 aria-label="Testimonial trước"
               >
                 <ArrowLeft size={18} />
               </button>
               <button
                 onClick={next}
-                className="btn btn-circle btn-outline btn-sm"
+                className="btn btn-circle btn-outline btn-sm border-neutral-content"
                 aria-label="Testimonial tiếp"
               >
                 <ArrowRight size={18} />
