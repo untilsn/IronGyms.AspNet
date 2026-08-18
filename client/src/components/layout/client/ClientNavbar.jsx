@@ -52,12 +52,9 @@ export default function ClientNavbar() {
   const initial = user?.fullname?.charAt(0)?.toUpperCase() ?? "?";
 
   return (
-    <header className="sticky top-0 z-40 border-b border-base-300 bg-base-100/90 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-8">
-        <NavLink
-          to="/"
-          className="font-display text-xl font-bold uppercase tracking-tight"
-        >
+    <header className="border-base-300 bg-base-100/90 sticky top-0 z-40 border-b backdrop-blur-xl">
+      <div className="container flex h-16 items-center justify-between px-8">
+        <NavLink to="/" className="font-display text-xl font-bold tracking-tight uppercase">
           Iron<span className="text-primary">Gyms</span>
         </NavLink>
 
@@ -68,10 +65,10 @@ export default function ClientNavbar() {
               to={link.to}
               end
               className={({ isActive }) =>
-                `rounded-field border-x-2 px-3.5 py-2 font-display text-xs font-medium uppercase tracking-wide outline-none transition-colors focus-visible:ring-2 focus-visible:ring-primary/40 ${
+                `rounded-field font-display focus-visible:ring-primary/40 border-x-2 px-3.5 py-2 text-xs font-medium tracking-wide uppercase transition-colors outline-none focus-visible:ring-2 ${
                   isActive
                     ? "border-primary/60 text-primary"
-                    : "border-transparent text-base-content/60 hover:text-base-content"
+                    : "text-base-content/60 hover:text-base-content border-transparent"
                 }`
               }
             >
@@ -85,40 +82,27 @@ export default function ClientNavbar() {
             <div
               tabIndex={0}
               role="button"
-              className="
-      flex cursor-pointer items-center gap-2
-      rounded-full
-      px-3 py-2
-      outline-none
-      transition-colors
-      hover:bg-base-200
-      focus-visible:ring-2
-      focus-visible:ring-primary/40
-    "
+              className="hover:bg-base-200 focus-visible:ring-primary/40 flex cursor-pointer items-center gap-2 rounded-full px-3 py-2 transition-colors outline-none focus-visible:ring-2"
             >
               <span className="relative flex">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/20 text-sm font-semibold text-primary">
+                <span className="bg-primary/20 text-primary flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold">
                   {initial}
                 </span>
-                <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-base-100 bg-success" />
+                <span className="border-base-100 bg-success absolute -right-0.5 -bottom-0.5 h-2.5 w-2.5 rounded-full border-2" />
               </span>
               <span className="hidden flex-col items-start leading-tight md:flex">
-                <span className="text-sm font-medium text-base-content">
+                <span className="text-base-content text-sm font-medium">
                   {user?.fullname ?? "Người dùng"}
                 </span>
-                <span className="text-[11px] text-base-content/50">
-                  Đang hoạt động
-                </span>
+                <span className="text-base-content/50 text-[11px]">Đang hoạt động</span>
               </span>
             </div>
 
             <ul
               tabIndex={0}
-              className="menu dropdown-content menu-sm z-50 mt-3 w-64 rounded-box bg-base-200 p-2 shadow-lg"
+              className="menu dropdown-content menu-sm rounded-box bg-base-200 z-50 mt-3 w-64 p-2 shadow-lg"
             >
-              <li className="menu-title px-2 pt-1 text-xs text-base-content/50">
-                {user?.email}
-              </li>
+              <li className="menu-title text-base-content/50 px-2 pt-1 text-xs">{user?.email}</li>
 
               {memberMenuLinks.map(({ label, to, icon: Icon }) => (
                 <li key={to}>
@@ -149,7 +133,7 @@ export default function ClientNavbar() {
               <li>
                 <button
                   onClick={() => logoutMutation.mutate()}
-                  className="rounded-field text-error focus:outline-none focus-visible:bg-error/10 hover:bg-error/10"
+                  className="rounded-field text-error focus-visible:bg-error/10 hover:bg-error/10 focus:outline-none"
                 >
                   <LogOut size={16} />
                   Đăng xuất

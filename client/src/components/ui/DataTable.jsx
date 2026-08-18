@@ -19,24 +19,18 @@ export default function DataTable({
   }
 
   if (!data.length) {
-    return (
-      <EmptyState
-        icon={Inbox}
-        title={emptyTitle}
-        description={emptyDescription}
-      />
-    );
+    return <EmptyState icon={Inbox} title={emptyTitle} description={emptyDescription} />;
   }
 
   return (
-    <div className="overflow-x-auto rounded-box border border-base-300">
+    <div className="rounded-box border-base-300 overflow-x-auto border">
       <table className="table">
         <thead>
           <tr>
             {columns.map((col) => (
               <th
                 key={col.key}
-                className="bg-base-200 text-xs uppercase tracking-wide text-base-content/60"
+                className="bg-base-200 text-base-content/60 text-xs tracking-wide uppercase"
               >
                 {col.header}
               </th>
@@ -47,9 +41,7 @@ export default function DataTable({
           {data.map((row) => (
             <tr key={row[rowKey]} className="hover:bg-base-200/50">
               {columns.map((col) => (
-                <td key={col.key}>
-                  {col.render ? col.render(row) : row[col.key]}
-                </td>
+                <td key={col.key}>{col.render ? col.render(row) : row[col.key]}</td>
               ))}
             </tr>
           ))}

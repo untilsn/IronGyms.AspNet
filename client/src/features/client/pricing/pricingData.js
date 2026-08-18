@@ -5,11 +5,7 @@ export const pricingPlans = [
     price: "500K",
     period: "/ tháng",
     highlighted: false,
-    features: [
-      "Truy cập phòng tập 24/7",
-      "Sử dụng phòng thay đồ",
-      "Dùng thiết bị cơ bản",
-    ],
+    features: ["Truy cập phòng tập 24/7", "Sử dụng phòng thay đồ", "Dùng thiết bị cơ bản"],
   },
   {
     id: "pro",

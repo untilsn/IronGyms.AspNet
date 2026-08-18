@@ -9,14 +9,7 @@ const SIZE_CLASS = {
   xl: "max-w-4xl",
 };
 
-export default function Modal({
-  open,
-  onClose,
-  title,
-  children,
-  footer,
-  size = "md",
-}) {
+export default function Modal({ open, onClose, title, children, footer, size = "md" }) {
   useEffect(() => {
     if (!open) return;
     const handleKeyDown = (e) => e.key === "Escape" && onClose?.();
@@ -32,10 +25,7 @@ export default function Modal({
 
   return createPortal(
     <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
-      <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={onClose}
-      />
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
       <div
         className={`card relative z-10 w-full ${SIZE_CLASS[size]} bg-base-200 shadow-2xl`}
         role="dialog"
@@ -44,13 +34,13 @@ export default function Modal({
         <div className="card-body">
           <div className="flex items-start justify-between gap-4">
             {title && (
-              <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-base-content">
+              <h3 className="font-display text-base-content text-lg font-semibold tracking-wide uppercase">
                 {title}
               </h3>
             )}
             <button
               onClick={onClose}
-              className="btn btn-ghost btn-sm btn-square -mr-2 -mt-2"
+              className="btn btn-ghost btn-sm btn-square -mt-2 -mr-2"
               aria-label="Đóng"
             >
               <X size={18} />
@@ -59,12 +49,10 @@ export default function Modal({
 
           <div className="mt-2">{children}</div>
 
-          {footer && (
-            <div className="mt-6 flex justify-end gap-3">{footer}</div>
-          )}
+          {footer && <div className="mt-6 flex justify-end gap-3">{footer}</div>}
         </div>
       </div>
     </div>,
-    document.body,
+    document.body
   );
 }

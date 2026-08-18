@@ -31,6 +31,13 @@ public class MemberService : IMemberService
         return member;
     }
 
+    public async Task<Member?> GetByUserIdAsync(Guid userId)
+    {
+        return await _context.Members
+            .Include(m => m.User)
+            .FirstOrDefaultAsync(m => m.UserId == userId);
+    }
+
     public async Task<Member?> UpdateAsync(Guid id, Member updated)
     {
         var member = await _context.Members.FindAsync(id);

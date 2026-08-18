@@ -39,8 +39,7 @@ export default function AdminLoginPage() {
       navigate("/admin");
     },
     onError: (error) => {
-      const message =
-        error.response?.data?.message || "Sai email hoặc mật khẩu";
+      const message = error.response?.data?.message || "Sai email hoặc mật khẩu";
       toast.error(message);
     },
   });
@@ -48,18 +47,14 @@ export default function AdminLoginPage() {
   const onSubmit = (values) => loginMutation.mutate(values);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-base-100 px-4">
-      <div className="card w-full max-w-sm border border-base-300 bg-base-200 shadow-xl">
+    <div className="bg-base-100 flex min-h-screen items-center justify-center px-4">
+      <div className="card border-base-300 bg-base-200 w-full max-w-sm border shadow-xl">
         <div className="card-body">
-          <h1 className="font-display text-2xl font-semibold text-base-content">
+          <h1 className="font-display text-base-content text-2xl font-semibold">
             Iron<span className="text-primary">Gyms</span>{" "}
-            <span className="badge badge-secondary badge-sm align-middle">
-              Admin
-            </span>
+            <span className="badge badge-secondary badge-sm align-middle">Admin</span>
           </h1>
-          <p className="mb-4 text-sm text-base-content/60">
-            Khu vực quản trị hệ thống
-          </p>
+          <p className="text-base-content/60 mb-4 text-sm">Khu vực quản trị hệ thống</p>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="form-control">
@@ -73,9 +68,7 @@ export default function AdminLoginPage() {
                 autoFocus
               />
               {errors.email && (
-                <span className="mt-1 text-xs text-error">
-                  {errors.email.message}
-                </span>
+                <span className="text-error mt-1 text-xs">{errors.email.message}</span>
               )}
             </div>
 
@@ -89,9 +82,7 @@ export default function AdminLoginPage() {
                 {...register("password")}
               />
               {errors.password && (
-                <span className="mt-1 text-xs text-error">
-                  {errors.password.message}
-                </span>
+                <span className="text-error mt-1 text-xs">{errors.password.message}</span>
               )}
             </div>
 

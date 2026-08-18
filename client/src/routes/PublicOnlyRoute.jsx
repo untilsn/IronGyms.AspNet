@@ -10,8 +10,7 @@ export default function PublicOnlyRoute({ area = "client" }) {
 
   if (isAuthenticated) {
     const isAdminUser = ADMIN_ROLES.includes(user?.role);
-    if (area === "admin" && isAdminUser)
-      return <Navigate to="/admin" replace />;
+    if (area === "admin" && isAdminUser) return <Navigate to="/admin" replace />;
     if (area === "client" && !isAdminUser) return <Navigate to="/" replace />;
   }
 

@@ -5,17 +5,17 @@ import QuickContact from "./components/QuickContact";
 
 export default function ContactPage() {
   return (
-    <main className="container pb-32 pt-20">
+    <main className="container pt-20 pb-32">
       <div className="grid grid-cols-1 gap-16 lg:grid-cols-12">
         <div className="space-y-16 lg:col-span-7">
           <header className="space-y-6">
-            <h1 className="font-display text-6xl font-black uppercase tracking-tight md:text-8xl">
+            <h1 className="font-display text-6xl font-black tracking-tight uppercase md:text-8xl">
               Kết Nối <br />
               <span className="text-primary">Với Chúng Tôi.</span>
             </h1>
-            <p className="max-w-lg text-xl font-light leading-relaxed text-base-content/60">
-              Dù bạn đang tìm huấn luyện viên riêng hay chỉ muốn ghé thăm không
-              gian tập, chúng tôi luôn sẵn sàng đồng hành cùng bạn.
+            <p className="text-base-content/60 max-w-lg text-xl leading-relaxed font-light">
+              Dù bạn đang tìm huấn luyện viên riêng hay chỉ muốn ghé thăm không gian tập, chúng tôi
+              luôn sẵn sàng đồng hành cùng bạn.
             </p>
           </header>
 

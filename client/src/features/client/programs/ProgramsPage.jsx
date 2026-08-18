@@ -17,10 +17,7 @@ export default function ProgramsPage() {
     <>
       <ProgramsHero />
 
-      <ProgramsFilterBar
-        activeCategory={activeCategory}
-        onChange={setActiveCategory}
-      />
+      <ProgramsFilterBar activeCategory={activeCategory} onChange={setActiveCategory} />
 
       <section className="container">
         {filteredPrograms.length > 0 ? (
@@ -30,7 +27,7 @@ export default function ProgramsPage() {
             ))}
           </div>
         ) : (
-          <p className="py-20 text-center text-base-content/50">
+          <p className="text-base-content/50 py-20 text-center">
             Chưa có chương trình nào trong danh mục này.
           </p>
         )}

@@ -30,8 +30,7 @@ export default function LoginPage() {
       navigate("/");
     },
     onError: (error) => {
-      const message =
-        error.response?.data?.message || "Sai email hoặc mật khẩu";
+      const message = error.response?.data?.message || "Sai email hoặc mật khẩu";
       toast.error(message);
     },
   });
@@ -39,15 +38,12 @@ export default function LoginPage() {
   const onSubmit = (values) => loginMutation.mutate(values);
 
   return (
-    <div className="card w-full bg-base-100/90 shadow-2xl backdrop-blur-md">
+    <div className="card bg-base-100/90 w-full shadow-2xl backdrop-blur-md">
       <div className="card-body">
-        <Link
-          to="/"
-          className="font-display text-3xl font-bold text-base-content"
-        >
+        <Link to="/" className="font-display text-base-content text-3xl font-bold">
           Iron<span className="text-primary">Gyms</span>
         </Link>
-        <p className="mb-4 text-sm text-base-content/60">
+        <p className="text-base-content/60 mb-4 text-sm">
           Đăng nhập để tiếp tục hành trình tập luyện của bạn
         </p>
 
@@ -59,15 +55,11 @@ export default function LoginPage() {
             <input
               type="email"
               placeholder="ban@email.com"
-              className={`input input-bordered w-full ${
-                errors.email ? "input-error" : ""
-              }`}
+              className={`input input-bordered w-full ${errors.email ? "input-error" : ""}`}
               {...register("email")}
               autoFocus
             />
-            {errors.email && (
-              <p className="mt-1 text-xs text-error">{errors.email.message}</p>
-            )}
+            {errors.email && <p className="text-error mt-1 text-xs">{errors.email.message}</p>}
           </div>
 
           <div className="form-control">
@@ -77,15 +69,11 @@ export default function LoginPage() {
             <input
               type="password"
               placeholder="••••••••"
-              className={`input input-bordered w-full ${
-                errors.password ? "input-error" : ""
-              }`}
+              className={`input input-bordered w-full ${errors.password ? "input-error" : ""}`}
               {...register("password")}
             />
             {errors.password && (
-              <p className="mt-1 text-xs text-error">
-                {errors.password.message}
-              </p>
+              <p className="text-error mt-1 text-xs">{errors.password.message}</p>
             )}
           </div>
 
@@ -102,9 +90,9 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="divider text-xs text-base-content/40">hoặc</div>
+        <div className="divider text-base-content/40 text-xs">hoặc</div>
 
-        <p className="text-center text-sm text-base-content/60">
+        <p className="text-base-content/60 text-center text-sm">
           Chưa có tài khoản?{" "}
           <Link to="/register" className="link link-primary font-medium">
             Đăng ký ngay

@@ -13,42 +13,42 @@ const footerSupport = [
 
 export default function ClientFooter() {
   return (
-    <footer className=" w-full bg-base-300 px-6 pb-5 pt-10 md:px-10">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 md:grid-cols-3">
+    <footer className="bg-base-300 w-full px-6 pt-10 pb-5 md:px-10">
+      <div className="container grid grid-cols-1 gap-12 md:grid-cols-3">
         <div>
-          <div className="mb-4 font-display text-lg font-bold uppercase tracking-tight text-base-content">
+          <div className="font-display text-base-content mb-4 text-lg font-bold tracking-tight uppercase">
             IronGyms
           </div>
-          <p className="max-w-xs text-sm leading-relaxed text-base-content/50">
-            Nơi giao thoa giữa thẩm mỹ cao cấp và hiệu suất thể chất nguyên bản.
-            Gia nhập cộng đồng elite.
+          <p className="text-base-content/50 max-w-xs text-sm leading-relaxed">
+            Nơi giao thoa giữa thẩm mỹ cao cấp và hiệu suất thể chất nguyên bản. Gia nhập cộng đồng
+            elite.
           </p>
         </div>
 
         <div className="grid grid-cols-2 gap-8">
           <div className="flex flex-col gap-3">
-            <h5 className="mb-2 font-display text-xs font-bold uppercase tracking-widest text-base-content">
+            <h5 className="font-display text-base-content mb-2 text-xs font-bold tracking-widest uppercase">
               Điều hướng
             </h5>
             {footerNav.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
-                className="text-sm text-base-content/50 transition-colors hover:text-primary"
+                className="text-base-content/50 hover:text-primary text-sm transition-colors"
               >
                 {item.label}
               </a>
             ))}
           </div>
           <div className="flex flex-col gap-3">
-            <h5 className="mb-2 font-display text-xs font-bold uppercase tracking-widest text-base-content">
+            <h5 className="font-display text-base-content mb-2 text-xs font-bold tracking-widest uppercase">
               Hỗ trợ
             </h5>
             {footerSupport.map((item) => (
               <a
                 key={item.label}
                 href={item.href}
-                className="text-sm text-base-content/50 transition-colors hover:text-primary"
+                className="text-base-content/50 hover:text-primary text-sm transition-colors"
               >
                 {item.label}
               </a>
@@ -57,7 +57,7 @@ export default function ClientFooter() {
         </div>
 
         <div className="flex flex-col gap-4">
-          <h5 className="mb-2 font-display text-xs font-bold uppercase tracking-widest text-base-content">
+          <h5 className="font-display text-base-content mb-2 text-xs font-bold tracking-widest uppercase">
             Kết nối
           </h5>
           <div className="flex gap-6">
@@ -65,7 +65,7 @@ export default function ClientFooter() {
               <a
                 key={social}
                 href="#"
-                className="text-sm font-bold uppercase tracking-tight text-base-content/50 transition-colors hover:text-primary"
+                className="text-base-content/50 hover:text-primary text-sm font-bold tracking-tight uppercase transition-colors"
               >
                 {social}
               </a>
@@ -74,8 +74,8 @@ export default function ClientFooter() {
         </div>
       </div>
 
-      <div className="mx-auto mt-16 max-w-7xl border-t border-base-content/10 pt-8">
-        <p className="text-xs uppercase tracking-widest text-base-content/30">
+      <div className="border-base-content/10 mx-auto mt-16 max-w-7xl border-t pt-8">
+        <p className="text-base-content/30 text-xs tracking-widest uppercase">
           © 2026 IronGyms. All rights reserved.
         </p>
       </div>

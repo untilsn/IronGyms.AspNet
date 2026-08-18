@@ -1,3 +1,8 @@
 import { createCrudApi } from "./createCrudApi";
-
-export const trainersApi = createCrudApi("trainers");
+const base = createCrudApi("trainers");
+export const trainersApi = {
+  getAll: base.getAll,
+  getById: base.getById,
+  create: base.create,
+  update: base.update,
+};

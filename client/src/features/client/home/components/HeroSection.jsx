@@ -12,25 +12,22 @@ export default function HeroSection() {
         role="img"
         aria-label="Vận động viên tập luyện với tạ đòn trong phòng gym tối"
       />
-      <div className="absolute inset-0 z-0 bg-gradient-to-r from-base-100 via-base-100/60 to-transparent" />
-      <div className="absolute inset-0 z-0 bg-gradient-to-t from-base-100 via-transparent to-transparent" />
+      <div className="from-base-100 via-base-100/60 absolute inset-0 z-0 bg-gradient-to-r to-transparent" />
+      <div className="from-base-100 absolute inset-0 z-0 bg-gradient-to-t via-transparent to-transparent" />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10">
+      <div className="relative z-10 container">
         <div className="grid items-center gap-12 lg:grid-cols-12">
           <div className="lg:col-span-8">
-            <span className="mb-4 block text-sm font-bold uppercase tracking-[0.2em] text-primary">
+            <span className="text-primary mb-4 block text-sm font-bold tracking-[0.2em] uppercase">
               Đánh thức tiềm năng nguyên bản của bạn
             </span>
-            <h1 className="font-display heading-vn mb-8 text-6xl font-bold uppercase tracking-tight md:text-7xl xl:text-8xl">
+            <h1 className="font-display heading-vn mb-8 text-6xl font-bold tracking-tight uppercase md:text-7xl xl:text-8xl">
               <span className="block">Nền Tảng</span>
-              <span className="text-gradient-primary mt-3 block">
-                Bắt Đầu Từ Đây.
-              </span>
+              <span className="text-gradient-primary mt-3 block">Bắt Đầu Từ Đây.</span>
             </h1>
-            <p className="mb-12 max-w-xl text-base leading-relaxed text-base-content/70">
-              Vượt ra khỏi ánh đèn neon và sự ồn ào. IronGyms là trải nghiệm rèn
-              luyện được thiết kế cho những ai đòi hỏi hiệu suất và phục hồi
-              đỉnh cao.
+            <p className="text-base-content/70 mb-12 max-w-xl text-base leading-relaxed">
+              Vượt ra khỏi ánh đèn neon và sự ồn ào. IronGyms là trải nghiệm rèn luyện được thiết kế
+              cho những ai đòi hỏi hiệu suất và phục hồi đỉnh cao.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button

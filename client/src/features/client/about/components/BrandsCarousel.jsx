@@ -13,10 +13,9 @@ const brands = [
 ];
 
 export default function BrandsCarousel() {
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, dragFree: true, align: "start" },
-    [Autoplay({ delay: 2500, stopOnInteraction: false })],
-  );
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, dragFree: true, align: "start" }, [
+    Autoplay({ delay: 2500, stopOnInteraction: false }),
+  ]);
 
   // pause autoplay khi người dùng đang kéo tay
   const onPointerDown = useCallback(() => {

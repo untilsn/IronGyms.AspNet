@@ -20,31 +20,22 @@ export default function AdminTopbar() {
   });
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-base-300 bg-base-100/90 px-6 backdrop-blur-xl">
+    <header className="border-base-300 bg-base-100/90 sticky top-0 z-20 flex h-16 items-center justify-between border-b px-6 backdrop-blur-xl">
       <span className="badge badge-secondary badge-sm">{user?.role}</span>
 
       <div className="dropdown dropdown-end">
-        <div
-          tabIndex={0}
-          role="button"
-          className="btn btn-ghost btn-circle avatar placeholder"
-        >
-          <div className="w-9 rounded-full bg-secondary/20 text-secondary">
+        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar placeholder">
+          <div className="bg-secondary/20 text-secondary w-9 rounded-full">
             <User size={18} />
           </div>
         </div>
         <ul
           tabIndex={0}
-          className="menu dropdown-content menu-sm z-50 mt-3 w-52 rounded-box bg-base-200 p-2 shadow-lg"
+          className="menu dropdown-content menu-sm rounded-box bg-base-200 z-50 mt-3 w-52 p-2 shadow-lg"
         >
-          <li className="menu-title px-2 text-xs text-base-content/50">
-            {user?.email}
-          </li>
+          <li className="menu-title text-base-content/50 px-2 text-xs">{user?.email}</li>
           <li>
-            <button
-              onClick={() => logoutMutation.mutate()}
-              className="text-error"
-            >
+            <button onClick={() => logoutMutation.mutate()} className="text-error">
               <LogOut size={16} />
               Đăng xuất
             </button>

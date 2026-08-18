@@ -1,8 +1,4 @@
-export const inquiryTypes = [
-  "Huấn luyện cá nhân",
-  "Lớp tập nhóm",
-  "Câu hỏi chung",
-];
+export const inquiryTypes = ["Huấn luyện cá nhân", "Lớp tập nhóm", "Câu hỏi chung"];
 
 export const operatingHours = [
   { day: "Thứ 2 - Thứ 6", time: "05:00 - 22:00" },

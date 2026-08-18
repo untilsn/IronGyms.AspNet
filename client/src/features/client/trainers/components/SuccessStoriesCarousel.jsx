@@ -6,11 +6,11 @@ import { successStories } from "../trainersData";
 
 function StoryCard({ story }) {
   return (
-    <div className="grid gap-6 rounded-box bg-base-200 p-6 sm:grid-cols-[auto_1fr] sm:items-center md:p-8">
+    <div className="rounded-box bg-base-200 grid gap-6 p-6 sm:grid-cols-[auto_1fr] sm:items-center md:p-8">
       <img
         src={story.photo}
         alt={story.name}
-        className="h-24 w-24 rounded-box object-cover sm:h-28 sm:w-28"
+        className="rounded-box h-24 w-24 object-cover sm:h-28 sm:w-28"
       />
       <div>
         <div className="mb-1 flex items-center gap-1">
@@ -18,29 +18,22 @@ function StoryCard({ story }) {
             <Star
               key={i}
               size={14}
-              className={
-                i < story.rating
-                  ? "fill-primary text-primary"
-                  : "text-base-content/20"
-              }
+              className={i < story.rating ? "fill-primary text-primary" : "text-base-content/20"}
             />
           ))}
         </div>
-        <p className="mb-3 text-sm text-base-content/60">"{story.quote}"</p>
+        <p className="text-base-content/60 mb-3 text-sm">"{story.quote}"</p>
         <p className="font-display text-sm font-bold uppercase">{story.name}</p>
-        <p className="text-xs text-base-content/40">
-          Huấn luyện bởi {story.trainedBy}
-        </p>
+        <p className="text-base-content/40 text-xs">Huấn luyện bởi {story.trainedBy}</p>
       </div>
     </div>
   );
 }
 
 export default function SuccessStoriesCarousel() {
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, align: "start" },
-    [Autoplay({ delay: 4000, stopOnInteraction: false })],
-  );
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" }, [
+    Autoplay({ delay: 4000, stopOnInteraction: false }),
+  ]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
@@ -58,11 +51,11 @@ export default function SuccessStoriesCarousel() {
     <section className="bg-base-200/50 py-16 md:py-24">
       <div className="container">
         <div className="mb-10 text-center">
-          <Quote className="mx-auto mb-2 text-base-content/10" size={56} />
-          <span className="mb-2 block text-sm font-bold uppercase tracking-widest text-primary">
+          <Quote className="text-base-content/10 mx-auto mb-2" size={56} />
+          <span className="text-primary mb-2 block text-sm font-bold tracking-widest uppercase">
             Đọc chia sẻ từ hội viên
           </span>
-          <h2 className="font-display text-4xl font-black uppercase tracking-tight md:text-5xl">
+          <h2 className="font-display text-4xl font-black tracking-tight uppercase md:text-5xl">
             Câu Chuyện Thành Công
           </h2>
         </div>
@@ -89,7 +82,7 @@ export default function SuccessStoriesCarousel() {
             <span
               key={i}
               className={`h-1.5 rounded-full transition-all ${
-                i === selectedIndex ? "w-6 bg-primary" : "w-1.5 bg-base-300"
+                i === selectedIndex ? "bg-primary w-6" : "bg-base-300 w-1.5"
               }`}
             />
           ))}

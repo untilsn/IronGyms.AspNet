@@ -1,10 +1,5 @@
 import { Mail } from "lucide-react";
-import {
-  SiInstagram,
-  SiFacebook,
-  SiTiktok,
-  SiZalo,
-} from "@icons-pack/react-simple-icons";
+import { SiInstagram, SiFacebook, SiTiktok, SiZalo } from "@icons-pack/react-simple-icons";
 
 const ICONS = {
   instagram: SiInstagram,

@@ -18,81 +18,74 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-base-200 py-32">
-      <div className="mx-auto max-w-5xl px-6 md:px-10">
-        <Quote
-          className="absolute -left-10 -top-10 text-primary opacity-5"
-          size={220}
-        />
+    <section className="bg-base-200 relative overflow-hidden py-32">
+      <div className="container">
+        <div className="mx-auto max-w-5xl px-6 md:px-10">
+          <Quote className="text-primary absolute -top-10 -left-10 opacity-5" size={220} />
 
-        <div className="grid grid-cols-1 items-center gap-16 md:grid-cols-2">
-          <div>
-            <h2 className="font-display mb-8 text-4xl font-black uppercase leading-tight">
-              Cộng đồng <br />
-              <span className="text-primary">vượt qua giới hạn.</span>
-            </h2>
+          <div className="grid grid-cols-1 items-center gap-16 md:grid-cols-2">
+            <div>
+              <h2 className="font-display mb-8 text-4xl leading-tight font-black uppercase">
+                Cộng đồng <br />
+                <span className="text-primary">vượt qua giới hạn.</span>
+              </h2>
 
-            <div className="mb-8 flex gap-4">
-              <button
-                onClick={prev}
-                className="btn btn-circle btn-outline btn-sm border-neutral-content"
-                aria-label="Testimonial trước"
-              >
-                <ArrowLeft size={18} />
-              </button>
-              <button
-                onClick={next}
-                className="btn btn-circle btn-outline btn-sm border-neutral-content"
-                aria-label="Testimonial tiếp"
-              >
-                <ArrowRight size={18} />
-              </button>
-            </div>
-
-            {/* dot indicator */}
-            <div className="flex gap-2">
-              {testimonials.map((_, i) => (
+              <div className="mb-8 flex gap-4">
                 <button
-                  key={i}
-                  onClick={() => {
-                    setDirection(i > index ? "right" : "left");
-                    setIndex(i);
-                  }}
-                  aria-label={`Xem testimonial ${i + 1}`}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    i === index ? "w-8 bg-primary" : "w-1.5 bg-base-content/20"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
+                  onClick={prev}
+                  className="btn btn-circle btn-outline btn-sm border-neutral-content"
+                  aria-label="Testimonial trước"
+                >
+                  <ArrowLeft size={18} />
+                </button>
+                <button
+                  onClick={next}
+                  className="btn btn-circle btn-outline btn-sm border-neutral-content"
+                  aria-label="Testimonial tiếp"
+                >
+                  <ArrowRight size={18} />
+                </button>
+              </div>
 
-          {/* overflow-hidden để "kẹp" animation trượt gọn trong khung card */}
-          <div className="overflow-hidden">
-            <div
-              key={index}
-              className={`rounded-xl border-l-4 border-primary bg-base-300 p-8 ${
-                direction === "right"
-                  ? "animate-slide-in-right"
-                  : "animate-slide-in-left"
-              }`}
-            >
-              <p className="mb-6 text-xl italic text-base-content">
-                "{current.quote}"
-              </p>
-              <div className="flex items-center gap-4">
-                <img
-                  src={current.image}
-                  alt={current.name}
-                  className="h-10 w-10 rounded-full object-cover"
-                />
-                <div>
-                  <p className="font-bold uppercase tracking-tight">
-                    {current.name}
-                  </p>
-                  <p className="text-xs uppercase tracking-widest text-base-content/50">
-                    {current.role}
-                  </p>
+              {/* dot indicator */}
+              <div className="flex gap-2">
+                {testimonials.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      setDirection(i > index ? "right" : "left");
+                      setIndex(i);
+                    }}
+                    aria-label={`Xem testimonial ${i + 1}`}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      i === index ? "bg-primary w-8" : "bg-base-content/20 w-1.5"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* overflow-hidden để "kẹp" animation trượt gọn trong khung card */}
+            <div className="overflow-hidden">
+              <div
+                key={index}
+                className={`border-primary bg-base-300 rounded-xl border-l-4 p-8 ${
+                  direction === "right" ? "animate-slide-in-right" : "animate-slide-in-left"
+                }`}
+              >
+                <p className="text-base-content mb-6 text-xl italic">"{current.quote}"</p>
+                <div className="flex items-center gap-4">
+                  <img
+                    src={current.image}
+                    alt={current.name}
+                    className="h-10 w-10 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="font-bold tracking-tight uppercase">{current.name}</p>
+                    <p className="text-base-content/50 text-xs tracking-widest uppercase">
+                      {current.role}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

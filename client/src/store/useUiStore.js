@@ -5,8 +5,7 @@ export const useUiStore = create(
   persist(
     (set) => ({
       sidebarCollapsed: false,
-      toggleSidebar: () =>
-        set((state) => ({ sidebarCollapsed: !state.sidebarCollapsed })),
+      toggleSidebar: () => set((state) => ({ sidebarCollapsed: !state.sidebarCollapsed })),
     }),
     {
       name: "irongyms-ui", // stored under this key in localStorage automatically

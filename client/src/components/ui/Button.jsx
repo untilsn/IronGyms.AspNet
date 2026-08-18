@@ -33,7 +33,7 @@ const Button = forwardRef(function Button(
     to,
     ...props
   },
-  ref,
+  ref
 ) {
   const classes = `btn !rounded-none font-display font-semibold uppercase tracking-wide transition-all duration-250 hover:scale-[1.03] active:scale-[0.97] ${
     VARIANT_CLASS[variant] ?? ""
@@ -41,11 +41,7 @@ const Button = forwardRef(function Button(
 
   const content = (
     <>
-      {loading ? (
-        <span className="loading loading-spinner loading-sm" />
-      ) : (
-        leftIcon
-      )}
+      {loading ? <span className="loading loading-spinner loading-sm" /> : leftIcon}
       {children}
       {!loading && rightIcon}
     </>
@@ -60,12 +56,7 @@ const Button = forwardRef(function Button(
   }
 
   return (
-    <button
-      ref={ref}
-      className={classes}
-      disabled={disabled || loading}
-      {...props}
-    >
+    <button ref={ref} className={classes} disabled={disabled || loading} {...props}>
       {content}
     </button>
   );

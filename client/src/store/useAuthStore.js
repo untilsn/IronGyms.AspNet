@@ -7,11 +7,9 @@ export const useAuthStore = create(
       user: null, // { id, email, role }
       isAuthenticated: false,
       isChecking: true, // đang kiểm tra session lúc load app
-      setUser: (user) =>
-        set({ user, isAuthenticated: !!user, isChecking: false }),
-      clearUser: () =>
-        set({ user: null, isAuthenticated: false, isChecking: false }),
+      setUser: (user) => set({ user, isAuthenticated: !!user, isChecking: false }),
+      clearUser: () => set({ user: null, isAuthenticated: false, isChecking: false }),
     }),
-    { name: "irongyms-auth" },
-  ),
+    { name: "irongyms-auth" }
+  )
 );

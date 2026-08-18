@@ -10,14 +10,14 @@ export default function QuickContact() {
     <div className="divider-subtle space-y-6 border-t pt-6">
       {contacts.map(({ icon: Icon, label, value }) => (
         <div key={label} className="flex items-center gap-6">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-base-300 text-primary">
+          <div className="bg-base-300 text-primary flex h-12 w-12 items-center justify-center rounded-full">
             <Icon size={20} />
           </div>
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-base-content/50">
+            <p className="text-base-content/50 text-[10px] font-bold tracking-widest uppercase">
               {label}
             </p>
-            <p className="text-lg font-bold text-base-content">{value}</p>
+            <p className="text-base-content text-lg font-bold">{value}</p>
           </div>
         </div>
       ))}

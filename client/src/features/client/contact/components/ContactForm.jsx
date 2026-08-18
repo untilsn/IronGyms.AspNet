@@ -31,8 +31,7 @@ export default function ContactForm() {
     },
   });
 
-  const onSubmit = (values) =>
-    submitMutation.mutate({ ...values, inquiryType });
+  const onSubmit = (values) => submitMutation.mutate({ ...values, inquiryType });
 
   return (
     <section className="surface-card rounded-box p-8 md:p-12">
@@ -40,7 +39,7 @@ export default function ContactForm() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           <div className="form-control">
             <label className="label">
-              <span className="label-text text-xs font-bold uppercase tracking-widest text-primary">
+              <span className="label-text text-primary text-xs font-bold tracking-widest uppercase">
                 Họ và tên
               </span>
             </label>
@@ -50,15 +49,13 @@ export default function ContactForm() {
               {...register("fullname")}
             />
             {errors.fullname && (
-              <span className="mt-1 text-xs text-error">
-                {errors.fullname.message}
-              </span>
+              <span className="text-error mt-1 text-xs">{errors.fullname.message}</span>
             )}
           </div>
 
           <div className="form-control">
             <label className="label">
-              <span className="label-text text-xs font-bold uppercase tracking-widest text-primary">
+              <span className="label-text text-primary text-xs font-bold tracking-widest uppercase">
                 Email
               </span>
             </label>
@@ -69,16 +66,14 @@ export default function ContactForm() {
               {...register("email")}
             />
             {errors.email && (
-              <span className="mt-1 text-xs text-error">
-                {errors.email.message}
-              </span>
+              <span className="text-error mt-1 text-xs">{errors.email.message}</span>
             )}
           </div>
         </div>
 
         <div className="form-control">
           <label className="label">
-            <span className="label-text text-xs font-bold uppercase tracking-widest text-primary">
+            <span className="label-text text-primary text-xs font-bold tracking-widest uppercase">
               Loại yêu cầu
             </span>
           </label>
@@ -88,7 +83,7 @@ export default function ContactForm() {
                 key={type}
                 type="button"
                 onClick={() => setInquiryType(type)}
-                className={`rounded-full px-6 py-2 text-xs font-bold uppercase tracking-widest transition-colors ${
+                className={`rounded-full px-6 py-2 text-xs font-bold tracking-widest uppercase transition-colors ${
                   inquiryType === type
                     ? "bg-primary text-primary-content"
                     : "bg-base-300 text-base-content/60 hover:bg-base-content/10"
@@ -102,7 +97,7 @@ export default function ContactForm() {
 
         <div className="form-control">
           <label className="label">
-            <span className="label-text text-xs font-bold uppercase tracking-widest text-primary">
+            <span className="label-text text-primary text-xs font-bold tracking-widest uppercase">
               Nội dung
             </span>
           </label>
@@ -113,16 +108,14 @@ export default function ContactForm() {
             {...register("message")}
           />
           {errors.message && (
-            <span className="mt-1 text-xs text-error">
-              {errors.message.message}
-            </span>
+            <span className="text-error mt-1 text-xs">{errors.message.message}</span>
           )}
         </div>
 
         <button
           type="submit"
           disabled={submitMutation.isPending}
-          className="btn btn-primary font-display w-full text-lg font-black uppercase tracking-tight"
+          className="btn btn-primary font-display w-full text-lg font-black tracking-tight uppercase"
         >
           {submitMutation.isPending ? (
             <span className="loading loading-spinner loading-sm" />

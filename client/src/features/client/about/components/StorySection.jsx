@@ -7,20 +7,19 @@ export default function StorySection() {
       <div className="container">
         <div className="grid items-center gap-12 md:grid-cols-2">
           <div>
-            <h2 className="font-display mb-6 text-4xl font-black uppercase leading-tight tracking-tight md:text-5xl">
+            <h2 className="font-display mb-6 text-4xl leading-tight font-black tracking-tight uppercase md:text-5xl">
               Khởi Đầu <br /> Từ Đâu
             </h2>
-            <p className="mb-8 max-w-md text-base-content/60">
-              IronGyms ra đời từ khát khao mang đến một không gian rèn luyện
-              đúng nghĩa — nơi mỗi bài tập đều có mục đích, mỗi buổi tập đều tạo
-              ra khác biệt thật sự cho cơ thể bạn.
+            <p className="text-base-content/60 mb-8 max-w-md">
+              IronGyms ra đời từ khát khao mang đến một không gian rèn luyện đúng nghĩa — nơi mỗi
+              bài tập đều có mục đích, mỗi buổi tập đều tạo ra khác biệt thật sự cho cơ thể bạn.
             </p>
             <button className="btn btn-outline btn-sm gap-2">
               Xem thêm <ArrowUpRight size={14} />
             </button>
           </div>
 
-          <div className="group relative aspect-[4/3] overflow-hidden rounded-box">
+          <div className="group rounded-box relative aspect-[4/3] overflow-hidden">
             <img
               src={Images.aboutStory}
               alt="Huấn luyện viên hướng dẫn học viên tập luyện"

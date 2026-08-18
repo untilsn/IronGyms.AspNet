@@ -56,18 +56,23 @@
   margin-inline: auto;
   padding-inline: 1rem;
   max-width: 1280px;
+  @media (min-width: 768px) {
+    .container {
+      padding-inline: 2rem;
+    }
+  }
 }
 
-@media (min-width: 768px) {
-  .container {
-    padding-inline: 2rem;
-  }
+.full-bleed {
+  width: 100vw;
+  margin-left: calc(50% - 50vw + var(--scrollbar-width, 0px) / 2);
 }
 
 body {
   font-family: var(--font-sans);
   background-color: var(--color-base-100);
   color: var(--color-base-content);
+  overflow-x: hidden; /* ← thêm dòng này */
 }
 
 .font-display {
@@ -119,11 +124,7 @@ html {
 
 /* gradient giờ từ primary (cam đậm, chủ đạo) sáng dần sang accent (đào nhạt, điểm nhấn) */
 .text-gradient-primary {
-  background-image: linear-gradient(
-    135deg,
-    var(--color-primary) 0%,
-    var(--color-accent) 100%
-  );
+  background-image: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -131,8 +132,7 @@ html {
 
 .border-glow {
   border: 1px solid color-mix(in oklch, var(--color-primary) 40%, transparent);
-  box-shadow: 0 0 24px -6px
-    color-mix(in oklch, var(--color-primary) 45%, transparent);
+  box-shadow: 0 0 24px -6px color-mix(in oklch, var(--color-primary) 45%, transparent);
 }
 
 .heading-vn {

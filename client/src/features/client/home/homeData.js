@@ -3,8 +3,7 @@ import { Images } from "../../../assets/images";
 export const programs = [
   {
     title: "Strength",
-    description:
-      "Calculated mechanical tension for maximum hypertrophy and raw power.",
+    description: "Calculated mechanical tension for maximum hypertrophy and raw power.",
     image: Images.program1,
     span: "md:col-span-7",
   },
@@ -16,8 +15,7 @@ export const programs = [
   },
   {
     title: "Mobility",
-    description:
-      "Kinetic freedom and conscious recovery for the modern athlete.",
+    description: "Kinetic freedom and conscious recovery for the modern athlete.",
     image: Images.program3,
     span: "md:col-span-5",
   },

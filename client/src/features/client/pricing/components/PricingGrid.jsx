@@ -8,21 +8,21 @@ export default function PricingGrid() {
       {pricingPlans.map((plan) => (
         <div
           key={plan.id}
-          className={`relative flex flex-col justify-between overflow-hidden rounded-box border p-10 ${
+          className={`rounded-box relative flex flex-col justify-between overflow-hidden border p-10 ${
             plan.highlighted
-              ? "z-10 border-primary/30 bg-base-300 shadow-2xl shadow-primary/10 lg:scale-105"
-              : "border-base-content/5 bg-base-200 transition-colors duration-500 hover:bg-base-300"
+              ? "border-primary/30 bg-base-300 shadow-primary/10 z-10 shadow-2xl lg:scale-105"
+              : "border-base-content/5 bg-base-200 hover:bg-base-300 transition-colors duration-500"
           }`}
         >
           {plan.highlighted && (
-            <span className="badge badge-primary absolute right-0 top-0 rounded-none rounded-bl-box px-4 py-3 text-[10px] font-black uppercase tracking-[0.2em]">
+            <span className="badge badge-primary rounded-bl-box absolute top-0 right-0 rounded-none px-4 py-3 text-[10px] font-black tracking-[0.2em] uppercase">
               Đề xuất
             </span>
           )}
 
           <div>
             <h3
-              className={`font-display mb-6 text-lg font-bold uppercase tracking-widest ${
+              className={`font-display mb-6 text-lg font-bold tracking-widest uppercase ${
                 plan.highlighted ? "text-primary" : "text-base-content/60"
               }`}
             >
@@ -37,15 +37,13 @@ export default function PricingGrid() {
               >
                 {plan.price}
               </span>
-              <span className="text-[10px] uppercase tracking-widest text-base-content/50">
+              <span className="text-base-content/50 text-[10px] tracking-widest uppercase">
                 {plan.period}
               </span>
             </div>
 
             {plan.note && (
-              <p className="mb-6 text-xs italic tracking-wide text-base-content/50">
-                {plan.note}
-              </p>
+              <p className="text-base-content/50 mb-6 text-xs tracking-wide italic">{plan.note}</p>
             )}
 
             <ul className="mb-12 space-y-4">
@@ -53,15 +51,13 @@ export default function PricingGrid() {
                 <li key={feature} className="flex items-center gap-3">
                   <CheckCircle2
                     size={18}
-                    className={
-                      plan.highlighted ? "text-primary" : "text-primary/70"
-                    }
+                    className={plan.highlighted ? "text-primary" : "text-primary/70"}
                   />
                   <span
                     className={`text-sm ${
                       plan.highlighted && i === 0
-                        ? "font-bold text-base-content"
-                        : "font-medium text-base-content/70"
+                        ? "text-base-content font-bold"
+                        : "text-base-content/70 font-medium"
                     }`}
                   >
                     {feature}
@@ -75,8 +71,8 @@ export default function PricingGrid() {
             to="/register"
             className={
               plan.highlighted
-                ? "btn btn-primary font-display w-full uppercase tracking-widest"
-                : "btn btn-outline font-display w-full uppercase tracking-widest"
+                ? "btn btn-primary font-display w-full tracking-widest uppercase"
+                : "btn btn-outline font-display w-full tracking-widest uppercase"
             }
           >
             Chọn gói này

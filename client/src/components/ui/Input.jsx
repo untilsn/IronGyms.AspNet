@@ -1,17 +1,8 @@
 import { forwardRef } from "react";
 
 const Input = forwardRef(function Input(
-  {
-    label,
-    error,
-    helperText,
-    leftIcon,
-    rightIcon,
-    className = "",
-    id,
-    ...props
-  },
-  ref,
+  { label, error, helperText, leftIcon, rightIcon, className = "", id, ...props },
+  ref
 ) {
   const inputId = id || props.name;
 
@@ -25,7 +16,7 @@ const Input = forwardRef(function Input(
 
       <div className="relative">
         {leftIcon && (
-          <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-base-content/40">
+          <span className="text-base-content/40 pointer-events-none absolute top-1/2 left-3 -translate-y-1/2">
             {leftIcon}
           </span>
         )}
@@ -38,16 +29,16 @@ const Input = forwardRef(function Input(
           {...props}
         />
         {rightIcon && (
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-base-content/40">
+          <span className="text-base-content/40 absolute top-1/2 right-3 -translate-y-1/2">
             {rightIcon}
           </span>
         )}
       </div>
 
       {error ? (
-        <p className="mt-1 text-xs text-error">{error}</p>
+        <p className="text-error mt-1 text-xs">{error}</p>
       ) : helperText ? (
-        <p className="mt-1 text-xs text-base-content/50">{helperText}</p>
+        <p className="text-base-content/50 mt-1 text-xs">{helperText}</p>
       ) : null}
     </div>
   );

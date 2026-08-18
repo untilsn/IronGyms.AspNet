@@ -2,6 +2,7 @@ using IronGyms.Api.Models;
 using IronGyms.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace IronGyms.Api.Controllers;
 
@@ -31,6 +32,18 @@ public class MembersController : ControllerBase
     {
         var member = await _memberService.GetByIdAsync(id);
         if (member is null) return NotFound();
+        return Ok(member);
+    }
+
+    [HttpGet("me")]
+    public async Task<IActionResult> GetMe()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (!Guid.TryParse(userId, out var id)) return Unauthorized();
+
+        var member = await _memberService.GetByUserIdAsync(id);
+        if (member is null) return NotFound();
+
         return Ok(member);
     }
 

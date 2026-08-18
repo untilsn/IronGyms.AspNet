@@ -1,3 +1,9 @@
-import { createCrudApi } from "./createCrudApi";
+import axiosClient from "./axiosClient";
 
-export const paymentsApi = createCrudApi("payments");
+export const paymentsApi = {
+  getAll: () => axiosClient.get("/payments"),
+  getById: (id) => axiosClient.get(`/payments/${id}`),
+  getByMembership: (memberMembershipId) =>
+    axiosClient.get(`/payments/membership/${memberMembershipId}`),
+  create: (payload) => axiosClient.post("/payments", payload),
+};

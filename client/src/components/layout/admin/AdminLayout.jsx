@@ -7,7 +7,7 @@ export default function AdminLayout() {
   const collapsed = useUiStore((s) => s.sidebarCollapsed);
 
   return (
-    <div className="min-h-screen bg-base-100 text-base-content">
+    <div className="bg-base-100 text-base-content min-h-screen">
       <AdminSidebar />
       <div
         className={`flex min-h-screen flex-col transition-[margin] duration-200 ${collapsed ? "ml-16" : "ml-64"}`}

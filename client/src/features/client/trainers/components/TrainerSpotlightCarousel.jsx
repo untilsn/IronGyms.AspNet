@@ -26,18 +26,18 @@ export default function TrainerSpotlightCarousel() {
   return (
     <section className="py-16 md:py-24">
       <div className="container">
-        <span className="mb-2 block text-sm font-bold uppercase tracking-widest text-primary">
+        <span className="text-primary mb-2 block text-sm font-bold tracking-widest uppercase">
           Gặp gỡ
         </span>
-        <h2 className="font-display mb-4 text-4xl font-black uppercase tracking-tight md:text-5xl">
+        <h2 className="font-display mb-4 text-4xl font-black tracking-tight uppercase md:text-5xl">
           Đội Ngũ Huấn Luyện Viên
         </h2>
-        <p className="mb-10 max-w-lg text-base-content/60">
-          Tìm hiểu những người đồng hành cùng bạn — huấn luyện viên chứng chỉ,
-          truyền động lực và dẫn dắt bạn đến mục tiêu.
+        <p className="text-base-content/60 mb-10 max-w-lg">
+          Tìm hiểu những người đồng hành cùng bạn — huấn luyện viên chứng chỉ, truyền động lực và
+          dẫn dắt bạn đến mục tiêu.
         </p>
 
-        <div className="flex flex-col justify-center items-center gap-6 lg:flex-row lg:items-stretch">
+        <div className="flex flex-col items-center justify-center gap-6 lg:flex-row lg:items-stretch">
           <TrainerContentPanel
             trainer={trainer}
             visible={visible}
@@ -53,24 +53,17 @@ export default function TrainerSpotlightCarousel() {
   );
 }
 
-function TrainerContentPanel({
-  trainer,
-  visible,
-  onPrev,
-  onNext,
-  current,
-  total,
-}) {
+function TrainerContentPanel({ trainer, visible, onPrev, onNext, current, total }) {
   return (
-    <div className="relative h-[400px]  flex-1 rounded-box border border-base-content/10 bg-base-200/40 p-6 backdrop-blur-xl sm:p-10">
+    <div className="rounded-box border-base-content/10 bg-base-200/40 relative h-[400px] flex-1 border p-6 backdrop-blur-xl sm:p-10">
       <div
-        className={`flex gap-6 transition-opacity  duration-200 sm:gap-8 ${
+        className={`flex gap-6 transition-opacity duration-200 sm:gap-8 ${
           visible ? "opacity-100" : "opacity-0"
         }`}
       >
         {/* Cột social icon dọc, có đường kẻ nối trên/dưới */}
         <div className="hidden flex-col items-center gap-4 sm:flex">
-          <span className="w-px grow bg-base-content/15" />
+          <span className="bg-base-content/15 w-px grow" />
           <div className="flex flex-col gap-4">
             {trainer.socials.map((social) => (
               <a
@@ -78,28 +71,28 @@ function TrainerContentPanel({
                 href={social.url}
                 target="_blank"
                 rel="noreferrer"
-                className="text-base-content/50 transition hover:text-primary"
+                className="text-base-content/50 hover:text-primary transition"
               >
                 <SocialIcon type={social.type} />
               </a>
             ))}
           </div>
-          <span className="w-px grow bg-base-content/15" />
+          <span className="bg-base-content/15 w-px grow" />
         </div>
 
         <div className="flex-1">
-          <h3 className="font-display mb-1 text-3xl font-black uppercase tracking-tight sm:text-4xl">
+          <h3 className="font-display mb-1 text-3xl font-black tracking-tight uppercase sm:text-4xl">
             {trainer.name}
           </h3>
-          <p className="mb-4 text-sm font-bold text-primary">{trainer.title}</p>
-          <p className="mb-6 text-base-content/60">{trainer.bio}</p>
+          <p className="text-primary mb-4 text-sm font-bold">{trainer.title}</p>
+          <p className="text-base-content/60 mb-6">{trainer.bio}</p>
 
-          <div className="mb-8 flex flex-wrap items-center gap-x-1 gap-y-2 text-xs text-base-content/40">
+          <div className="text-base-content/40 mb-8 flex flex-wrap items-center gap-x-1 gap-y-2 text-xs">
             {trainer.tags.map((tag, i) => (
               <span key={tag} className="flex items-center">
                 {tag}
                 {i < trainer.tags.length - 1 && (
-                  <span className="mx-2.5 h-1.5 w-1.5 rounded-full bg-gradient-to-r from-primary to-accent" />
+                  <span className="from-primary to-accent mx-2.5 h-1.5 w-1.5 rounded-full bg-gradient-to-r" />
                 )}
               </span>
             ))}
@@ -109,7 +102,7 @@ function TrainerContentPanel({
         </div>
       </div>
 
-      <div className="absolute bottom-6 right-6 hidden items-center gap-4 sm:flex">
+      <div className="absolute right-6 bottom-6 hidden items-center gap-4 sm:flex">
         <button
           onClick={onPrev}
           className="btn btn-circle btn-ghost btn-sm"
@@ -124,7 +117,7 @@ function TrainerContentPanel({
         >
           <ChevronRight size={18} />
         </button>
-        <span className="text-xs text-base-content/40">
+        <span className="text-base-content/40 text-xs">
           {current} / {total}
         </span>
       </div>
@@ -134,7 +127,7 @@ function TrainerContentPanel({
 
 function TrainerImagePanel({ trainer, visible }) {
   return (
-    <div className="hidden overflow-hidden rounded-box lg:block lg:h-auto lg:w-[420px]">
+    <div className="rounded-box hidden overflow-hidden lg:block lg:h-auto lg:w-[420px]">
       <img
         src={trainer.image}
         alt={trainer.name}

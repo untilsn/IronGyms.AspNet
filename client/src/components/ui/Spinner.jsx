@@ -5,22 +5,14 @@ const SIZE_CLASS = {
   lg: "loading-lg",
 };
 
-export default function Spinner({
-  size = "md",
-  className = "",
-  fullScreen = false,
-}) {
+export default function Spinner({ size = "md", className = "", fullScreen = false }) {
   const spinner = (
-    <span
-      className={`loading loading-spinner ${SIZE_CLASS[size]} text-primary ${className}`}
-    />
+    <span className={`loading loading-spinner ${SIZE_CLASS[size]} text-primary ${className}`} />
   );
 
   if (fullScreen) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-base-100">
-        {spinner}
-      </div>
+      <div className="bg-base-100 flex min-h-screen items-center justify-center">{spinner}</div>
     );
   }
 

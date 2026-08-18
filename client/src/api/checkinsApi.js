@@ -1,11 +1,9 @@
 import axiosClient from "./axiosClient";
-import { createCrudApi } from "./createCrudApi";
 
+/*  
+Không dùng createCrudApi — vì CheckInsController không có GetAll/GetById/Update/Delete, chỉ có đúng 2 action (GetByMember, Create). Ép factory vào đây sẽ tạo ra các hàm gọi API không tồn tại (404 khi lỡ gọi checkinsApi.getAll()) — giữ nguyên viết tay như bạn đã có là đúng.
+*/
 export const checkinsApi = {
-  ...createCrudApi("checkins"),
-  // Manual check-in by member code/name (datalist-driven lookup on the
-  // form) — mirrors the old CheckIns/Create action.
-  manualCheckIn: (payload) => axiosClient.post("/checkins/manual", payload),
-  searchMembers: (query) =>
-    axiosClient.get("/checkins/member-search", { params: { q: query } }),
+  getByMember: (memberId) => axiosClient.get(`/checkins/member/${memberId}`),
+  create: (memberId) => axiosClient.post("/checkins", { memberId }),
 };

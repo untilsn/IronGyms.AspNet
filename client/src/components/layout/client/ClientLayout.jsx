@@ -4,9 +4,9 @@ import ClientFooter from "./ClientFooter";
 
 export default function ClientLayout() {
   return (
-    <div className="min-h-screen bg-base-100">
+    <div className="bg-base-100 min-h-screen">
       <ClientNavbar />
-      <main className="mx-auto ">
+      <main className="pb-24 md:pb-10">
         <Outlet />
       </main>
       <ClientFooter />
