@@ -1,13 +1,17 @@
+using IronGyms.Api.DTOs;
+using IronGyms.Api.DTOs.Members;
 using IronGyms.Api.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace IronGyms.Api.Services;
 
 public interface IMemberService
 {
-    Task<List<Member>> GetAllAsync();
-    Task<Member?> GetByIdAsync(Guid id);
+    Task<List<MemberDto>> GetAllAsync();
+    Task<MemberDto?> GetByIdAsync(Guid id);
+    Task<MemberDto?> GetByUserIdDtoAsync(Guid userId);
     Task<Member?> GetByUserIdAsync(Guid userId);
-    Task<Member> CreateAsync(Member member);
-    Task<Member?> UpdateAsync(Guid id, Member updated);
+    Task<MemberDto?> UpdateAsync(Guid id, UpdateMemberDto dto);
+    Task<MemberDto?> UploadAvatarAsync(Guid id, IFormFile file);
     Task<bool> DeleteAsync(Guid id);
 }

@@ -3,7 +3,7 @@ import axios from "axios";
 // Base URL of the ASP.NET Core API. Set VITE_API_URL in .env, e.g.
 // VITE_API_URL=https://localhost:7001/api
 const baseURL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-console.log(baseURL);
+
 const axiosClient = axios.create({
   baseURL,
   // Required so the HttpOnly JWT cookie set by ASP.NET Core is sent

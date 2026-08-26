@@ -27,8 +27,14 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+
+
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -38,6 +44,8 @@ builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<ICheckInService, CheckInService>();
 builder.Services.AddScoped<ITrainerService, TrainerService>();
 builder.Services.AddScoped<ITrainingScheduleService, TrainingScheduleService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
+
 
 
 

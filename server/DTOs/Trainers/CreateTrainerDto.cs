@@ -14,4 +14,9 @@ public class CreateTrainerDto
     public string Password { get; set; } = string.Empty;
 
     public string? Specialty { get; set; }
+    public string? Bio { get; set; }
+
+    [Range(0, 60)]
+    public int? ExperienceYears { get; set; }
+    public string? Certifications { get; set; }
 }

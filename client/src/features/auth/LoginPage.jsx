@@ -4,6 +4,7 @@ import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { Dumbbell, User } from "lucide-react";
 import { authApi } from "../../api/authApi";
 import { useAuthStore } from "../../store/useAuthStore";
 
@@ -12,6 +13,24 @@ const loginSchema = z.object({
   password: z.string().min(1, "Vui lòng nhập mật khẩu"),
 });
 
+// Chỉ hiển thị ở môi trường dev, để không lộ ra bản build production
+const isDev = import.meta.env.DEV;
+
+const demoAccounts = [
+  {
+    label: "Member",
+    email: "member@test.com",
+    password: "12345678",
+    icon: User,
+  },
+  {
+    label: "Trainer",
+    email: "trainer@test.com",
+    password: "12345678",
+    icon: Dumbbell,
+  },
+];
+
 export default function LoginPage() {
   const navigate = useNavigate();
   const setUser = useAuthStore((s) => s.setUser);
@@ -19,13 +38,15 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({ resolver: zodResolver(loginSchema) });
 
   const loginMutation = useMutation({
     mutationFn: (credentials) => authApi.login(credentials),
     onSuccess: ({ data }) => {
-      setUser(data);
+      setUser(data); // data giờ đã sạch, không có token
+      console.log(data);
       toast.success("Đăng nhập thành công");
       navigate("/");
     },
@@ -37,6 +58,11 @@ export default function LoginPage() {
 
   const onSubmit = (values) => loginMutation.mutate(values);
 
+  const fillDemoAccount = (account) => {
+    setValue("email", account.email, { shouldValidate: true });
+    setValue("password", account.password, { shouldValidate: true });
+  };
+
   return (
     <div className="card bg-base-100/90 w-full shadow-2xl backdrop-blur-md">
       <div className="card-body">
@@ -46,6 +72,27 @@ export default function LoginPage() {
         <p className="text-base-content/60 mb-4 text-sm">
           Đăng nhập để tiếp tục hành trình tập luyện của bạn
         </p>
+
+        {isDev && (
+          <div className="border-base-300 mb-2 rounded-lg border border-dashed p-3">
+            <p className="text-base-content/40 mb-2 text-xs font-medium tracking-wide uppercase">
+              Tài khoản demo (chỉ hiện ở dev)
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {demoAccounts.map((account) => (
+                <button
+                  key={account.email}
+                  type="button"
+                  onClick={() => fillDemoAccount(account)}
+                  className="btn btn-outline btn-xs gap-1.5"
+                >
+                  <account.icon size={12} />
+                  {account.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="form-control">

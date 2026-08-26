@@ -2,24 +2,20 @@ import { Link } from "react-router-dom";
 import { CalendarClock, Clock } from "lucide-react";
 
 const STATUS_LABEL = {
-  0: "Đã đặt",
-  1: "Hoàn thành",
-  2: "Đã huỷ",
-  3: "Vắng mặt",
+  Booked: "Đã đặt",
+  Completed: "Hoàn thành",
+  Cancelled: "Đã huỷ",
+  NoShow: "Vắng mặt",
 };
+
 const STATUS_BADGE = {
-  0: "badge-primary",
-  1: "badge-success",
-  2: "badge-error",
-  3: "badge-warning",
+  Booked: "badge-primary",
+  Completed: "badge-success",
+  Cancelled: "badge-error",
+  NoShow: "badge-warning",
 };
 
 export default function UpcomingScheduleCard({ schedules = [] }) {
-  const upcoming = schedules
-    .filter((s) => new Date(s.startTime) > new Date() && s.status === 0)
-    .sort((a, b) => new Date(a.startTime) - new Date(b.startTime))
-    .slice(0, 3);
-
   return (
     <div className="surface-card rounded-box p-6">
       <div className="mb-4 flex items-center justify-between">
@@ -31,14 +27,14 @@ export default function UpcomingScheduleCard({ schedules = [] }) {
         </Link>
       </div>
 
-      {upcoming.length === 0 ? (
+      {schedules.length === 0 ? (
         <div className="flex flex-col items-center gap-2 py-8 text-center">
           <CalendarClock size={28} className="text-base-content/20" />
           <p className="text-base-content/50 text-sm">Chưa có buổi tập nào được đặt</p>
         </div>
       ) : (
         <ul className="space-y-3">
-          {upcoming.map((s) => (
+          {schedules.map((s) => (
             <li
               key={s.id}
               className="rounded-field border-base-content/5 flex items-center justify-between border p-3"
@@ -48,7 +44,7 @@ export default function UpcomingScheduleCard({ schedules = [] }) {
                   <Clock size={16} />
                 </span>
                 <div>
-                  <p className="text-sm font-semibold">{s.trainer?.user?.fullname ?? "PT"}</p>
+                  <p className="text-sm font-semibold">{s.trainerName}</p>
                   <p className="text-base-content/50 text-xs">
                     {new Date(s.startTime).toLocaleString("vi-VN", {
                       day: "2-digit",

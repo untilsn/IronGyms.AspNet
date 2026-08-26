@@ -8,6 +8,7 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     public DbSet<User> Users => Set<User>();
+    public DbSet<UserProfile> UserProfiles => Set<UserProfile>();
     public DbSet<Member> Members => Set<Member>();
     public DbSet<MembershipPlan> MembershipPlans => Set<MembershipPlan>();
     public DbSet<MemberMembership> MemberMemberships => Set<MemberMembership>();
@@ -19,6 +20,16 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        builder.Entity<UserProfile>()
+            .HasOne(p => p.User)
+            .WithOne(u => u.Profile)
+            .HasForeignKey<UserProfile>(p => p.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<UserProfile>()
+            .HasIndex(p => p.UserId)
+            .IsUnique();
 
         builder.Entity<Member>()
             .HasIndex(m => m.UserId)

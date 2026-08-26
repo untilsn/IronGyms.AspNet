@@ -10,7 +10,7 @@ export default function MembershipStatusCard({ membership }) {
           <p className="text-base-content font-semibold">Bạn chưa có gói tập nào</p>
           <p className="text-base-content/50 text-sm">Chọn 1 gói phù hợp để bắt đầu hành trình</p>
         </div>
-        <Link to="/pricing" className="btn btn-primary btn-sm">
+        <Link to="/dashboard/membership" className="btn btn-primary btn-sm">
           Xem các gói tập
         </Link>
       </div>
@@ -36,7 +36,7 @@ export default function MembershipStatusCard({ membership }) {
         </Link>
       </div>
 
-      <p className="font-display mb-1 text-2xl font-black">{membership.membershipPlan?.name}</p>
+      <p className="font-display mb-1 text-2xl font-black">{membership.planName}</p>
       <p className="text-base-content/50 mb-5 text-sm">
         Còn <span className="text-primary font-bold">{daysLeft} ngày</span>
       </p>

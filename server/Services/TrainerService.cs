@@ -1,4 +1,5 @@
 using IronGyms.Api.Data;
+using IronGyms.Api.DTOs;
 using IronGyms.Api.DTOs.Trainers;
 using IronGyms.Api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -14,50 +15,86 @@ public class TrainerService : ITrainerService
         _context = context;
     }
 
-    public async Task<List<Trainer>> GetAllAsync()
+    public async Task<List<TrainerDto>> GetAllAsync()
     {
-        return await _context.Trainers.Include(t => t.User).ToListAsync();
+        return await _context.Trainers
+            .Include(t => t.User).ThenInclude(u => u.Profile)
+            .Select(t => ToDto(t))
+            .ToListAsync();
     }
 
-    public async Task<Trainer?> GetByIdAsync(Guid id)
+    public async Task<TrainerDto?> GetByIdAsync(Guid id)
     {
-        return await _context.Trainers.Include(t => t.User)
+        var trainer = await _context.Trainers
+            .Include(t => t.User).ThenInclude(u => u.Profile)
             .FirstOrDefaultAsync(t => t.Id == id);
+
+        return trainer is null ? null : ToDto(trainer);
     }
 
-    public async Task<Trainer?> CreateAsync(CreateTrainerDto dto)
+    public async Task<TrainerDto?> CreateAsync(CreateTrainerDto dto)
     {
         var emailExists = await _context.Users.AnyAsync(u => u.Email == dto.Email);
         if (emailExists) return null;
 
         var user = new User
         {
-            Fullname = dto.Fullname,
             Email = dto.Email,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
             Role = UserRole.Trainer
         };
         _context.Users.Add(user);
 
+        var profile = new UserProfile
+        {
+            UserId = user.Id,
+            User = user,
+            Fullname = dto.Fullname
+        };
+        _context.UserProfiles.Add(profile);
+        user.Profile = profile;
+
         var trainer = new Trainer
         {
             UserId = user.Id,
             User = user,
-            Specialty = dto.Specialty
+            Specialty = dto.Specialty,
+            Bio = dto.Bio,
+            ExperienceYears = dto.ExperienceYears,
+            Certifications = dto.Certifications
         };
         _context.Trainers.Add(trainer);
 
         await _context.SaveChangesAsync();
-        return await GetByIdAsync(trainer.Id);
+        return ToDto(trainer);
     }
 
-    public async Task<Trainer?> UpdateAsync(Guid id, UpdateTrainerDto dto)
+    public async Task<TrainerDto?> UpdateAsync(Guid id, UpdateTrainerDto dto)
     {
-        var trainer = await _context.Trainers.FindAsync(id);
+        var trainer = await _context.Trainers
+            .Include(t => t.User).ThenInclude(u => u.Profile)
+            .FirstOrDefaultAsync(t => t.Id == id);
         if (trainer is null) return null;
 
         trainer.Specialty = dto.Specialty;
+        trainer.Bio = dto.Bio;
+        trainer.ExperienceYears = dto.ExperienceYears;
+        trainer.Certifications = dto.Certifications;
+
         await _context.SaveChangesAsync();
-        return trainer;
+        return ToDto(trainer);
     }
+
+    private static TrainerDto ToDto(Trainer trainer) => new()
+    {
+        Id = trainer.Id,
+        Fullname = trainer.User.Profile.Fullname,
+        Email = trainer.User.Email,
+        AvatarUrl = trainer.User.Profile.AvatarUrl,
+        Specialty = trainer.Specialty,
+        Bio = trainer.Bio,
+        ExperienceYears = trainer.ExperienceYears,
+        Certifications = trainer.Certifications,
+        JoinedAt = trainer.JoinedAt
+    };
 }

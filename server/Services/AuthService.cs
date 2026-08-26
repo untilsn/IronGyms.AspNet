@@ -28,13 +28,20 @@ public class AuthService : IAuthService
 
         var user = new User
         {
-            Fullname = dto.Fullname,
             Email = dto.Email,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
             Role = UserRole.Member
         };
-
         _context.Users.Add(user);
+
+        var profile = new UserProfile
+        {
+            UserId = user.Id,
+            User = user,
+            Fullname = dto.Fullname
+        };
+        _context.UserProfiles.Add(profile);
+        user.Profile = profile;
 
         var member = new Member { UserId = user.Id, User = user };
         _context.Members.Add(member);
@@ -47,7 +54,9 @@ public class AuthService : IAuthService
 
     public async Task<AuthResponseDto?> LoginAsync(LoginDto dto)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
+        var user = await _context.Users
+            .Include(u => u.Profile)
+            .FirstOrDefaultAsync(u => u.Email == dto.Email);
         if (user is null) return null;
 
         var isPasswordValid = BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash);
@@ -61,13 +70,15 @@ public class AuthService : IAuthService
 
     public async Task<AuthResponseDto?> RefreshTokenAsync(string refreshToken)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
+        var user = await _context.Users
+            .Include(u => u.Profile)
+            .FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
 
         if (user is null) return null;
         if (user.RefreshTokenExpiresAt is null || user.RefreshTokenExpiresAt < DateTime.UtcNow)
-            return null; // refresh token hết hạn hoặc không hợp lệ
+            return null;
 
-        await SetRefreshTokenAsync(user); // cấp refresh token mới (rotation)
+        await SetRefreshTokenAsync(user);
         await _context.SaveChangesAsync();
 
         return BuildAuthResponse(user);
@@ -84,10 +95,27 @@ public class AuthService : IAuthService
         return true;
     }
 
+    public async Task<MeDto?> GetMeAsync(Guid userId)
+    {
+        var user = await _context.Users
+            .Include(u => u.Profile)
+            .FirstOrDefaultAsync(u => u.Id == userId);
+        if (user is null) return null;
+
+        return new MeDto
+        {
+            Id = user.Id,
+            Fullname = user.Profile.Fullname,
+            AvatarUrl = user.Profile.AvatarUrl,
+            Email = user.Email,
+            Role = user.Role.ToString()
+        };
+    }
+
     private async Task SetRefreshTokenAsync(User user)
     {
         user.RefreshToken = GenerateRefreshToken();
-        user.RefreshTokenExpiresAt = DateTime.UtcNow.AddDays(7); // refresh token sống 7 ngày
+        user.RefreshTokenExpiresAt = DateTime.UtcNow.AddDays(7);
         await Task.CompletedTask;
     }
 
@@ -102,7 +130,8 @@ public class AuthService : IAuthService
         return new AuthResponseDto
         {
             Id = user.Id,
-            Fullname = user.Fullname,
+            Fullname = user.Profile.Fullname,
+            AvatarUrl = user.Profile.AvatarUrl,
             Email = user.Email,
             Role = user.Role.ToString(),
             Token = GenerateJwtToken(user),

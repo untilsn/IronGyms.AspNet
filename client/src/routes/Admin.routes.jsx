@@ -14,7 +14,7 @@ export const adminRoutes = (
       <Route path="/admin/login" element={<AdminLoginPage />} />
     </Route>
 
-    <Route element={<RoleRoute allowedRoles={ADMIN_ROLES} />}>
+    <Route element={<RoleRoute allowedRoles={ADMIN_ROLES} redirectTo="/admin/login" />}>
       <Route element={<AdminLayout />}>
         <Route path="/admin" element={<AdminDashboardPage />} />
         {/* <Route path="/admin/members" element={<MembersListPage />} /> */}

@@ -41,7 +41,7 @@ export const clientRoutes = (
       <Route path="/contact" element={<ContactPage />} />
 
       {/* Protected — khu vực dashboard, bắt buộc đăng nhập đúng role Member */}
-      <Route element={<RoleRoute allowedRoles={["Member", "Trainer"]} />}>
+      <Route element={<RoleRoute allowedRoles={["Member", "Trainer"]} redirectTo="/" />}>
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/dashboard/membership" element={<MembershipPage />} />

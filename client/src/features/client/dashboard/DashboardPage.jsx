@@ -1,37 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
-import { registrationsApi } from "../../../api/registrationsApi";
-import { checkinsApi } from "../../../api/checkinsApi";
-import { schedulesApi } from "../../../api/schedulesApi";
+import { dashboardApi } from "../../../api/dashboardApi";
+import { useAuthStore } from "../../../store/useAuthStore";
 import WelcomeCard from "./components/WelcomeCard";
 import MembershipStatusCard from "./components/MembershipStatusCard";
 import QuickActionsGrid from "./components/QuickActionsGrid";
 import UpcomingScheduleCard from "./components/UpcomingScheduleCard";
 import RecentCheckinsCard from "./components/RecentCheckinsCard";
-import { useMemberProfile } from "../../../hooks/useMemberProfile";
 
 export default function DashboardPage() {
-  const { data: member, isLoading: loadingMember } = useMemberProfile();
-  const memberId = member?.id;
+  const user = useAuthStore((s) => s.user);
 
-  const { data: memberships = [] } = useQuery({
-    queryKey: ["registrations", memberId],
-    queryFn: () => registrationsApi.getByMember(memberId).then((r) => r.data),
-    enabled: !!memberId,
+  const { data: summary, isLoading } = useQuery({
+    queryKey: ["dashboard", "member-summary"],
+    queryFn: () => dashboardApi.getMemberSummary().then((r) => r.data),
   });
 
-  const { data: checkins = [] } = useQuery({
-    queryKey: ["checkins", memberId],
-    queryFn: () => checkinsApi.getByMember(memberId).then((r) => r.data),
-    enabled: !!memberId,
-  });
-
-  const { data: schedules = [] } = useQuery({
-    queryKey: ["schedules", memberId],
-    queryFn: () => schedulesApi.getByMember(memberId).then((r) => r.data),
-    enabled: !!memberId,
-  });
-
-  if (loadingMember) {
+  if (isLoading) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
         <span className="loading loading-spinner loading-lg text-primary" />
@@ -39,22 +23,20 @@ export default function DashboardPage() {
     );
   }
 
-  const activeMembership = memberships.find((m) => m.status === 0);
-
   return (
     <div className="space-y-6">
       <WelcomeCard
-        fullname={member?.user?.fullname}
-        activeMembership={activeMembership}
-        checkinCount={checkins.length}
+        fullname={user?.fullname}
+        activeMembership={summary?.activeMembership}
+        checkinCount={summary?.totalCheckIns ?? 0}
       />
 
       <QuickActionsGrid />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        <MembershipStatusCard membership={activeMembership} />
-        <UpcomingScheduleCard schedules={schedules} />
-        <RecentCheckinsCard checkins={checkins} />
+        <MembershipStatusCard membership={summary?.activeMembership} />
+        <UpcomingScheduleCard schedules={summary?.upcomingSchedules ?? []} />
+        <RecentCheckinsCard checkins={summary?.recentCheckIns ?? []} />
       </div>
     </div>
   );
