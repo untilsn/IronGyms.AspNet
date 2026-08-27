@@ -1,10 +1,5 @@
-import axiosClient from "./axiosClient";
 import { createCrudApi } from "./createCrudApi";
 
-// MembershipPlans supports soft-delete when a plan already has
-// registrations tied to it, so `remove` maps to a dedicated endpoint
-// instead of a hard DELETE.
-export const MembershipPlansApi = {
-  ...createCrudApi("membership-plans"),
-  softDelete: (id) => axiosClient.patch(`/membership-plans/${id}/deactivate`),
-};
+// Dùng cho: mọi người xem danh sách gói (getAll/getById — public trên /pricing)
+//           Admin/Staff quản lý gói (create, update, remove)
+export const membershipPlansApi = createCrudApi("membershipplans");

@@ -1,5 +1,7 @@
 import axiosClient from "./axiosClient";
 
+// Dùng cho mọi role — chỉ chứa hành động chung ở tầng User (auth/identity),
+// không chứa dữ liệu nghiệp vụ riêng (đó là việc của membersApi/trainersApi)
 export const usersApi = {
   uploadAvatar: (id, file) => {
     const formData = new FormData();
