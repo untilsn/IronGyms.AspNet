@@ -1,8 +1,19 @@
 import { Outlet } from "react-router-dom";
 import DashboardMobileTabs from "./components/DashboardMobileTabs";
 import DashboardSidebar from "./components/DashboardSidebar";
+import { useProfileStore } from "../../../store/useProfileStore";
 
 export default function DashboardLayout() {
+  const isLoadingProfile = useProfileStore((s) => s.isLoadingProfile);
+
+  if (isLoadingProfile) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <span className="loading loading-spinner loading-lg text-primary" />
+      </div>
+    );
+  }
+
   return (
     <div className="container py-6">
       <DashboardMobileTabs />

@@ -2,6 +2,7 @@ using IronGyms.Api.DTOs.MemberMemberships;
 using IronGyms.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace IronGyms.Api.Controllers;
 
@@ -25,7 +26,7 @@ public class MemberMembershipsController : ControllerBase
         return Ok(result);
     }
 
-    [Authorize(Roles = "Admin,Staff")]
+    [Authorize(Roles = "Member,Admin,Staff")]
     [HttpGet("member/{memberId}")]
     public async Task<IActionResult> GetByMember(Guid memberId)
     {
@@ -41,6 +42,7 @@ public class MemberMembershipsController : ControllerBase
         return Ok(result);
     }
 
+    // Admin tạo hộ gói tập cho 1 Member bất kỳ
     [Authorize(Roles = "Admin,Staff")]
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateMemberMembershipDto dto)
@@ -58,6 +60,31 @@ public class MemberMembershipsController : ControllerBase
     {
         var result = await _service.UpdateStatusAsync(id, dto);
         if (result is null) return NotFound();
+        return Ok(result);
+    }
+
+    // ===== Member tự thao tác cho chính mình =====
+
+    [HttpPost("subscribe")]
+    public async Task<IActionResult> Subscribe([FromBody] SubscribeMembershipDto dto)
+    {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (!Guid.TryParse(userIdClaim, out var userId)) return Unauthorized();
+
+        var result = await _service.SubscribeAsync(userId, dto);
+        if (result is null)
+            return BadRequest(new { message = "Không thể đăng ký gói tập, vui lòng thử lại" });
+
+        return Ok(result);
+    }
+
+    [HttpPost("{id}/renew")]
+    public async Task<IActionResult> Renew(Guid id, [FromBody] RenewMembershipDto dto)
+    {
+        var result = await _service.RenewAsync(id, dto);
+        if (result is null)
+            return BadRequest(new { message = "Không thể gia hạn — gói đã bị huỷ hoặc không tồn tại" });
+
         return Ok(result);
     }
 }

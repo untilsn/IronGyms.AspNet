@@ -20,13 +20,13 @@ const demoAccounts = [
   {
     label: "Member",
     email: "member@test.com",
-    password: "12345678",
+    password: ".vb059bN^dh",
     icon: User,
   },
   {
     label: "Trainer",
     email: "trainer@test.com",
-    password: "12345678",
+    password: "55B;)0£2m#l",
     icon: Dumbbell,
   },
 ];

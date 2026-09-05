@@ -84,6 +84,28 @@ public class AuthService : IAuthService
         return BuildAuthResponse(user);
     }
 
+    public async Task<(bool Success, string? Error)> ChangePasswordAsync(Guid userId, ChangePasswordDto dto)
+    {
+        var user = await _context.Users.FindAsync(userId);
+        if (user is null) return (false, "Không tìm thấy tài khoản");
+
+        var isCurrentPasswordValid = BCrypt.Net.BCrypt.Verify(dto.CurrentPassword, user.PasswordHash);
+        if (!isCurrentPasswordValid) return (false, "Mật khẩu hiện tại không đúng");
+
+        if (dto.CurrentPassword == dto.NewPassword)
+            return (false, "Mật khẩu mới phải khác mật khẩu hiện tại");
+
+        user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
+
+        // Đổi mật khẩu xong thì thu hồi refresh token cũ — buộc đăng nhập lại
+        // trên các thiết bị khác, đúng thông lệ bảo mật khi đổi mật khẩu
+        user.RefreshToken = null;
+        user.RefreshTokenExpiresAt = null;
+
+        await _context.SaveChangesAsync();
+        return (true, null);
+    }
+
     public async Task<bool> LogoutAsync(Guid userId)
     {
         var user = await _context.Users.FindAsync(userId);

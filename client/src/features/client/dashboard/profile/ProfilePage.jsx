@@ -6,7 +6,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { Mail, Shield } from "lucide-react";
 import { membersApi } from "../../../../api/membersApi";
+import { useProfileStore } from "../../../../store/useProfileStore";
 import AvatarUploader from "./components/AvatarUploader";
+import ChangePasswordForm from "./components/ChangePasswordForm";
 
 const profileSchema = z.object({
   dateOfBirth: z.string().optional(),
@@ -17,10 +19,16 @@ const profileSchema = z.object({
 
 export default function ProfilePage() {
   const queryClient = useQueryClient();
+  const storeMember = useProfileStore((s) => s.member);
+  const setMember = useProfileStore((s) => s.setMember);
 
+  // Dùng dữ liệu đã có sẵn trong Zustand làm initialData —
+  // React Query sẽ KHÔNG gọi lại API nếu đã có initialData (trừ khi bạn chủ động refetch)
   const { data: member, isLoading } = useQuery({
     queryKey: ["members", "me"],
     queryFn: () => membersApi.getMe().then((r) => r.data),
+    initialData: storeMember ?? undefined,
+    enabled: !storeMember, // nếu Zustand đã có data rồi thì không cần fetch nữa
   });
 
   const {
@@ -43,9 +51,12 @@ export default function ProfilePage() {
 
   const updateMutation = useMutation({
     mutationFn: (values) => membersApi.update(member.id, values),
-    onSuccess: () => {
+    onSuccess: ({ data }) => {
       toast.success("Đã cập nhật hồ sơ");
-      queryClient.invalidateQueries({ queryKey: ["members", "me"] });
+      // Ghi thẳng data mới vào cache — không gọi lại GET
+      queryClient.setQueryData(["members", "me"], data);
+      // Đồng bộ luôn Zustand — để Navbar/Sidebar đọc avatar/tên cũng cập nhật ngay
+      setMember(data);
     },
     onError: () => toast.error("Cập nhật thất bại, thử lại sau"),
   });
@@ -72,9 +83,14 @@ export default function ProfilePage() {
       {/* Avatar + thông tin tài khoản — chỉ đọc */}
       <div className="surface-card rounded-box flex flex-col gap-6 p-6 sm:flex-row sm:items-center">
         <AvatarUploader
-          userId={member?.userId ?? member?.id}
           avatarUrl={member?.avatarUrl}
           fallback={initial}
+          onUploaded={(avatarUrl) => {
+            // Ghi thẳng avatarUrl mới vào cache hiện có, không cần gọi lại GET
+            queryClient.setQueryData(["members", "me"], (old) =>
+              old ? { ...old, avatarUrl } : old
+            );
+          }}
         />
 
         <div className="flex-1 space-y-3">
@@ -147,6 +163,7 @@ export default function ProfilePage() {
           )}
         </button>
       </form>
+      <ChangePasswordForm />
     </div>
   );
 }

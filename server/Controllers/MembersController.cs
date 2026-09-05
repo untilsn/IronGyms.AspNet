@@ -42,7 +42,7 @@ public class MembersController : ControllerBase
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (!Guid.TryParse(userId, out var id)) return Unauthorized();
 
-        var member = await _memberService.GetByUserIdAsync(id);
+        var member = await _memberService.GetByUserIdDtoAsync(id);   // ← đổi từ GetByUserIdAsync
         if (member is null) return NotFound();
 
         return Ok(member);
@@ -57,7 +57,7 @@ public class MembersController : ControllerBase
     // }
 
 
-    [Authorize(Roles = "Admin,Staff")]
+    [Authorize(Roles = "Member,Admin,Staff")]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateMemberDto dto)
     {
@@ -66,24 +66,8 @@ public class MembersController : ControllerBase
         return Ok(member);
     }
 
-    [HttpPost("{id}/avatar")]
-    public async Task<IActionResult> UploadAvatar(Guid id, IFormFile file)
-    {
-        if (file is null || file.Length == 0)
-            return BadRequest(new { message = "Vui lòng chọn file ảnh" });
 
-        if (file.Length > 2 * 1024 * 1024)
-            return BadRequest(new { message = "Ảnh không được vượt quá 2MB" });
 
-        var allowedTypes = new[] { "image/jpeg", "image/png", "image/webp" };
-        if (!allowedTypes.Contains(file.ContentType))
-            return BadRequest(new { message = "Chỉ chấp nhận định dạng JPEG, PNG, WebP" });
-
-        var member = await _memberService.UploadAvatarAsync(id, file);
-        if (member is null) return NotFound();
-
-        return Ok(new { avatarUrl = member.AvatarUrl });
-    }
 
     [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]

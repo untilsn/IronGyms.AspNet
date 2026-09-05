@@ -70,31 +70,7 @@ public class MemberService : IMemberService
         return ToDto(member);
     }
 
-    public async Task<MemberDto?> UploadAvatarAsync(Guid id, IFormFile file)
-    {
-        var member = await _context.Members
-            .Include(m => m.User).ThenInclude(u => u.Profile)
-            .FirstOrDefaultAsync(m => m.Id == id);
-        if (member is null) return null;
 
-        var extension = Path.GetExtension(file.FileName);
-        var fileName = $"{member.UserId}{extension}";
-        var uploadsFolder = Path.Combine(_environment.WebRootPath, "uploads", "avatars");
-        Directory.CreateDirectory(uploadsFolder);
-
-        var filePath = Path.Combine(uploadsFolder, fileName);
-        using (var stream = new FileStream(filePath, FileMode.Create))
-        {
-            await file.CopyToAsync(stream);
-        }
-
-        var request = _httpContextAccessor.HttpContext!.Request;
-        var baseUrl = $"{request.Scheme}://{request.Host}";
-        member.User.Profile.AvatarUrl = $"{baseUrl}/uploads/avatars/{fileName}";
-
-        await _context.SaveChangesAsync();
-        return ToDto(member);
-    }
 
     public async Task<bool> DeleteAsync(Guid id)
     {

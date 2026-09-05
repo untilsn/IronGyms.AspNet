@@ -6,13 +6,14 @@ using System.Security.Claims;
 namespace IronGyms.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/dashboard")]
 [Authorize]
-public class DashboardController : ControllerBase
+public class MemberDashboardController : ControllerBase
 {
-    private readonly IDashboardService _dashboardService;
+    private readonly IMemberDashboardService _dashboardService;
 
-    public DashboardController(IDashboardService dashboardService)
+    public MemberDashboardController(
+        IMemberDashboardService dashboardService)
     {
         _dashboardService = dashboardService;
     }

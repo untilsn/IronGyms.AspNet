@@ -51,4 +51,7 @@ public class TrainersController : ControllerBase
         if (trainer is null) return NotFound();
         return Ok(trainer);
     }
+
+
+
 }

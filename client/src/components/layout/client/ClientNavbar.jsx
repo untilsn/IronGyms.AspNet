@@ -36,12 +36,14 @@ const navItemClass =
 
 export default function ClientNavbar() {
   const navigate = useNavigate();
+
   const user = useAuthStore((s) => s.user);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const clearUser = useAuthStore((s) => s.clearUser);
 
   const logoutMutation = useMutation({
     mutationFn: authApi.logout,
+
     onSuccess: () => {
       clearUser();
       toast.success("Đã đăng xuất");
@@ -51,13 +53,17 @@ export default function ClientNavbar() {
 
   const initial = user?.fullname?.charAt(0)?.toUpperCase() ?? "?";
 
+  console.log(user);
+
   return (
     <header className="border-base-300 bg-base-100/90 sticky top-0 z-40 border-b backdrop-blur-xl">
       <div className="container flex h-16 items-center justify-between px-8">
+        {/* Logo */}
         <NavLink to="/" className="font-display text-xl font-bold tracking-tight uppercase">
           Iron<span className="text-primary">Gyms</span>
         </NavLink>
 
+        {/* Marketing navigation */}
         <nav className="hidden items-center gap-1 md:flex">
           {marketingLinks.map((link) => (
             <NavLink
@@ -77,6 +83,7 @@ export default function ClientNavbar() {
           ))}
         </nav>
 
+        {/* User */}
         {isAuthenticated ? (
           <div className="dropdown dropdown-end">
             <div
@@ -85,19 +92,47 @@ export default function ClientNavbar() {
               className="hover:bg-base-200 focus-visible:ring-primary/40 flex cursor-pointer items-center gap-2 rounded-full px-3 py-2 transition-colors outline-none focus-visible:ring-2"
             >
               <span className="relative flex">
-                <span className="bg-primary/20 text-primary flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold">
-                  {initial}
+                {/* Avatar */}
+                <span className="bg-primary/20 text-primary flex h-8 w-8 items-center justify-center overflow-hidden rounded-full text-sm font-semibold">
+                  {user?.avatarUrl ? (
+                    <img
+                      src={user.avatarUrl}
+                      alt={user.fullname ?? "Avatar"}
+                      className="h-full w-full object-cover"
+                      onError={(e) => {
+                        // Nếu ảnh lỗi thì ẩn ảnh
+                        e.currentTarget.style.display = "none";
+
+                        // Hiện lại chữ cái
+                        const fallback =
+                          e.currentTarget.parentElement?.querySelector(".avatar-fallback");
+
+                        fallback?.classList.remove("hidden");
+                      }}
+                    />
+                  ) : null}
+
+                  {/* Avatar fallback */}
+                  <span className={`avatar-fallback ${user?.avatarUrl ? "hidden" : ""}`}>
+                    {initial}
+                  </span>
                 </span>
+
+                {/* Online status */}
                 <span className="border-base-100 bg-success absolute -right-0.5 -bottom-0.5 h-2.5 w-2.5 rounded-full border-2" />
               </span>
+
+              {/* User information */}
               <span className="hidden flex-col items-start leading-tight md:flex">
                 <span className="text-base-content text-sm font-medium">
                   {user?.fullname ?? "Người dùng"}
                 </span>
+
                 <span className="text-base-content/50 text-[11px]">Đang hoạt động</span>
               </span>
             </div>
 
+            {/* Dropdown */}
             <ul
               tabIndex={0}
               className="menu dropdown-content menu-sm rounded-box bg-base-200 z-50 mt-3 w-64 p-2 shadow-lg"
@@ -121,6 +156,7 @@ export default function ClientNavbar() {
                   Hồ sơ của tôi
                 </NavLink>
               </li>
+
               <li>
                 <NavLink to="/dashboard/settings" className={navItemClass}>
                   <Settings size={16} />
@@ -133,10 +169,12 @@ export default function ClientNavbar() {
               <li>
                 <button
                   onClick={() => logoutMutation.mutate()}
+                  disabled={logoutMutation.isPending}
                   className="rounded-field text-error focus-visible:bg-error/10 hover:bg-error/10 focus:outline-none"
                 >
                   <LogOut size={16} />
-                  Đăng xuất
+
+                  {logoutMutation.isPending ? "Đang đăng xuất..." : "Đăng xuất"}
                 </button>
               </li>
             </ul>
@@ -146,6 +184,7 @@ export default function ClientNavbar() {
             <Link to="/login" className="btn btn-ghost btn-sm">
               Đăng nhập
             </Link>
+
             <Link to="/register" className="btn btn-primary btn-sm">
               Đăng ký
             </Link>

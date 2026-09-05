@@ -45,7 +45,6 @@ public class AuthController : ControllerBase
     [HttpPost("refresh")]
     public async Task<IActionResult> Refresh()
     {
-        // Đọc refresh token từ cookie thay vì body, vì giờ nó không còn nằm ở JSON nữa
         if (!Request.Cookies.TryGetValue("refresh_token", out var refreshToken))
             return Unauthorized(new { message = "Không tìm thấy refresh token" });
 
@@ -55,6 +54,24 @@ public class AuthController : ControllerBase
 
         SetAuthCookies(result.Token, result.RefreshToken);
         return Ok(new { result.Id, result.Fullname, result.AvatarUrl, result.Email, result.Role });
+    }
+
+    [Authorize]
+    [HttpPost("change-password")]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
+    {
+        var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (!Guid.TryParse(userIdClaim, out var userId)) return Unauthorized();
+
+        var (success, error) = await _authService.ChangePasswordAsync(userId, dto);
+        if (!success)
+            return BadRequest(new { message = error });
+
+        // Xoá cookie hiện tại — vì refresh token đã bị thu hồi, cookie cũ không còn dùng được nữa
+        Response.Cookies.Delete("access_token");
+        Response.Cookies.Delete("refresh_token");
+
+        return Ok(new { message = "Đổi mật khẩu thành công. Vui lòng đăng nhập lại." });
     }
 
     [Authorize]

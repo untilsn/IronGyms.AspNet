@@ -12,6 +12,5 @@ public interface IMemberService
     Task<MemberDto?> GetByUserIdDtoAsync(Guid userId);
     Task<Member?> GetByUserIdAsync(Guid userId);
     Task<MemberDto?> UpdateAsync(Guid id, UpdateMemberDto dto);
-    Task<MemberDto?> UploadAvatarAsync(Guid id, IFormFile file);
     Task<bool> DeleteAsync(Guid id);
 }
